@@ -1,0 +1,241 @@
+THE SPECTRUM GAME DATABASE
+
+SABOTEUR
+
+PUBLISHER
+Durrel
+
+AUTHOR
+
+YEAR
+1984
+
+DESCRIPTION
+Saboteur is a side-view arcade adventure split-screen platform
+game.
+
+CONTROLS
+You can use keyboard (redefinable) or joystick.
+
+UP - Jump/climb up
+DOWN - Duck/climb down
+LEFT - Walk left
+RIGHT - walk right
+FIRE - Throw/pickup object
+
+INSTRUCTIONS
+When you select to start the game, you will be asked for a
+difficulty level.  This determines how many enemies there are,
+and how long you have to find the disk.  The aim of the game is
+to find the secret disk and then escape from the complex using
+the helicopter, before the time limit runs out.  Thankfully, the
+time does stop as soon as you find the disk.
+
+Up and down will may the saboteur jump and crouch respectively,
+unless they are standing on or next to a ladder, in which case
+he will climb it in the appropriate direction.
+
+The top section of the screen display is your view of the world. 
+The bottom section is divided into three parts.  The far left and
+far right show what the saboteur is currently holding (if
+anything) and what they are standing near.  The middle section
+shows a variety of information, including score, time and health.
+
+If the saboteur is standing near something, and is not carrying
+anything, then pressing fire will pick it up.  Should fire be
+pressed while the saboteur is carrying something, then they will
+throw the object in the direction he is facing, unless it is the
+disk.
+
+CHEATS
+Use the following codes:
+Level 2 - JONIN
+Level 3 - KIME
+Level 4 - KUJI KIRI
+Level 5 - SAIMENJITSU
+Level 6 - GENIN
+Level 7 - M1 LU KATA
+Level 8 - DIM MAK
+Level 9 - SATORI
+
+SEQUELS/PREQUELS
+Saboteur spawned one sequel - "Saboteur 2, Avenging Angel", in
+which you played the sister of the hero of the original.  It was
+a very similar game, but with a much larger map, and more variety
+of enemies and graphics.
+
+INLAY CARD TEXT
+You are a highly skilled mercenary trained in the martial arts. You are
+employed to infiltrate a central security building which is disguised as a
+warehouse. You must steal a disk that contains the names of all the rebel
+leaders before its information is sent to the outlying security stations.
+You are working against the clock, both in getting the disk, and in making
+your escape. You must enter the building from the sea by rubber dinghy, and
+will then only be able to leave by the helicopter on the roof. You will have
+to find your way around the warehouse, making use of the guards' own weapon
+supplies in your struggle through overwhelming odds.
+
+(C) DURELL SOFTWARE 1985
+
+SABOTEUR by Clive Townsend
+--------------------------
+Compatible with Kempston, Protek and most other joystick interfaces.
+
+Loading Instructions
+--------------------
+Place the cassette in the tape recorder and rewind. Make sure the recorder is
+properly adjusted and connected to the computer. Type LOAD "" and press the
+ENTER key.
+
+Standard Controls
+-----------------
+A       Joystick UP     CLIMB UP if on ladder, or KICK if still
+Z       Joystick DOWN   CLIMB DOWN if on ladder, or DUCK if still
+M       Joystick RIGHT  MOVE RIGHT
+N       Joystick LEFT   MOVE LEFT
+SPACE   Joystick FIRE   THROW/USE/TAKE object, or PUNCH if none
+
+NB: If you press the UP control at the same time as the MOVE RIGHT or LEFT
+control you will perform a SIDEWAYS JUMP. The distance you jump will depend
+on whether you were running or standing when you pressed the UP control. You
+CANNOT kick or jump in rooms with a low ceiling.
+
+NB: The THROW control used on its own will throw objects horizontally. If you
+wish to aim an object you should press either UP or DOWN control at the same
+time as the THROW control. This will direct the object up or down (at an
+angle of 22 degrees).
+
+NB: If you press the THROW/USE control when there is an object in your NEAR
+DISPLAY, then the NEAR object will become HELD (and if you had a HELD object
+at the time it gets swapped to become the new NEAR object). This swapping
+process will continue until you move away from the NEAR object.
+
+NB: The UP control also starts the helicopter.
+
+Quick Start Instructions
+------------------------
+Enter warehouse. Avoid dogs, guards, and ceiling-mounted anti-personnel
+weapons which are guided by video cameras. Go up through a number of floor
+levels, then go over top of lift shaft to other side of the warehouse. You
+will have to use the computer terminals to unlock some doors. Next go down
+the sewers. On your journey you should try to find a hidden time-bomb and
+carry it to the underground computer centre. Use two mini-trains which
+connect sewers to computer centre. Take (or swap time-bomb with) the disk,
+then escape by helicopter which is on the roof of the warehouse, (you'll have
+to climb the stanchions and jump across the gantries on the top floor).
+
+Screen Displays
+---------------
+The HELD DISPLAY shows the object that you are carrying and ready to throw.
+Certain objects (ie: the disk and the bomb) cannot be thrown (though any
+object can be put down and the HELD again later). If you press the THROW/USE
+control when this display is empty (or contains the disk or the bomb) you
+will only throw a PUNCH.
+
+The NEAR DISPLAY shows nearby objects that you can pick-up or use. If you
+press the THROW/USE control when an object is shown in the NEAR DISPLAY it
+gets swapped with your HELD DISPLAY. The only exception to this is the
+computer terminals, which you may USE to lock/unlock doors while a terminal
+appears in your NEAR DISPLAY. Note that only a few terminals actually control
+doors, and the rest have other functions which will not affect you. If you
+have changed the lock status of a door when you USE a terminal the NEAR
+DISPLAY will show the terminal change colour, (ie: if you leave a terminal
+when it is purple you have changed a lock). Note that you CANNOT throw or use
+your HELD object when there is an object in your NEAR DISPLAY. To fuse the
+time-bomb you must swap it for the disk (in the disk's original location).
+
+At the start of the game your TIME DISPLAY will show how long you have to
+get to the disk (before its information gets down-loaded to all the outlying
+stations, and your mission gets aborted). If you manage to place the time-
+bomb in the disk's original location the TIME DISPLAY will then show how
+long you have to get to the helicopter to make your escape. You don't have to
+get the disk or set the time-bomb before you escape, but you'll be well
+rewarded if you do.
+
+The PAY DISPLAY shows your earnings in US dollars. You don't get paid for
+hurting the dogs, and you don't get much for killing guards. You do get some
+big bonuses for escaping with the disk after setting the time-bomb.
+
+The RED BAR below the PAY DISPLAY shows your energy level. This will go
+down when you get shot, when you fight, when you fall, or get bitten; but it
+will go up if you stand still. If you run out of energy you die.
+
+Fighting
+--------
+DOGS will snap at your heels and cause your energy to run down. You may jump
+over them, or if you are mean and nasty you can kill them by throwing a
+weapon (in which case you will have to aim it with the DOWN control).
+
+GUARDS may sometimes be standing still and looking the wrong way, in which
+case if you move very very slowly you may be able to creep up on them (or
+just exit the room) without them noticing you. All GUARDS have throwing
+knives, a gun (loaded with rubber bullets, as they prefer to capture
+intruders rather than kill them out-right), and may resort to unarmed combat
+(punching and kicking) though they won't have your Ninja skills and therefore
+won't be able to kill with a single blow like you. If a guard throws a knife
+at you or shoots as you, you can DUCK down out of the way, though eventually
+you will either have to kill him or run away. Note that you can't kick a
+guard in a room with a low ceiling.
+
+The WEAPONS that you can throw include knives, shurikens (pointed stars that
+you throw), grenades, bricks, rocks, and pieces of pipe. You can throw these
+when they are in your HELD DISPLAY, and aim your shot by pressing the UP and
+DOWN control at the same time as the THROW control. You can KICK by pressing
+the KICK control when you are standing still, or PUNCH by pressing the
+THROW control when your HELD DISPLAY is empty.
+
+Skill Levels
+------------
+These affect the length of time in between shots from the guards and the
+anti-personnel weapons (ie: your response time). They also affect the guard
+dogs which become more vicious at higher skill levels. They also control the
+position of the time-bomb which you will have to carry further on higher
+skill levels (NB: so long as you stay at the same skill level you will
+always find the bomb in the same place).
+
+Score
+-----
+Dog killed                              0 (so why do it?)
+Guard killed by weapon                100
+Guard killed by punch or kick         500 (real Ninja stuff!)
+Get disk in time limit               5000
+Swap time-bomb with disk             5000
+Escape (by helicopter)               1000 (and fight another day)
+Escape with disk (bonus)             5000
+Escape with disk and bomb set       10000
+
+SCORES RECEIVED
+4/5 Sinclair User.
+
+URL
+
+GENERAL FACTS
+
+NOTES
+One minor gripe - the advert pictured an SAS man jumping into a
+bunker with a machine gun.  Unfortunately, as far as I know,
+there are no machine guns available in the game (but the enemies
+carry them). 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
