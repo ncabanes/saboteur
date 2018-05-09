@@ -35,11 +35,11 @@ class Dog : Sprite
         //TO DO change direction
         x += xSpeed;
         frame++;
-        if( frame > 10)
+        if (frame > 10)
         {
             NextFrame();
             frame = 1;
         }
-        
+
     }
 }
