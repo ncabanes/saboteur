@@ -4,17 +4,41 @@
  * 
  * Changes:
  * 0.01, 09-may-2018, Nacho: First version, almost empty skeleton
- */
+ * 0.02. 09-may-2018, López, Rebollo: Implemented movement and sprites
+  */
 
 class Dog : Sprite
 {
+    int frame;
+
     public Dog()
     {
-        LoadImage("data/imgRetro/dog1r.png");
+        frame = 1;
+        LoadSequence(RIGHT,
+            new string[] { "data/imgRetro/dog1r.png",
+                "data/imgRetro/dog2r.png",
+                "data/imgRetro/dog3r.png"});
+
+        LoadSequence(LEFT,
+            new string[] { "data/imgRetro/dog1l.png",
+                "data/imgRetro/dog2l.png",
+                "data/imgRetro/dog3l.png"});
+
+        currentDirection = RIGHT;
+        width = 128;
+        height = 80;
+        xSpeed = 2;
     }
 
     public override void Move()
     {
-        // TO DO
+        x += xSpeed;
+        frame++;
+        if( frame > 10)
+        {
+            NextFrame();
+            frame = 1;
+        }
+        
     }
 }
