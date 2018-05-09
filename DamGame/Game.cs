@@ -72,6 +72,8 @@ class Game
             // Check input by the user
             if (SdlHardware.KeyPressed(SdlHardware.KEY_RIGHT))
                 playerX += playerSpeed;
+            if (SdlHardware.KeyPressed(SdlHardware.KEY_LEFT))
+                playerX -= playerSpeed;
             // TO DO: Complete with remaining keys
 
             if (SdlHardware.KeyPressed(SdlHardware.KEY_ESC))
