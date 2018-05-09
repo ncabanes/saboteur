@@ -10,27 +10,47 @@
  *      Added CurrentRoom, InfoPanel and a Dog
  * 0.00, 08-may-2018: Initial version, drawing player 2, enemies, 
  *      allowing the user to move to the right
+ * 0.02, 08-may-2018: Convert the variables in atributes and put the game loop in a function
+ *      Jose Vilaplana, Moises Encinas, Marcos Cervantes.
  */
 
 using System;
 
 class Game
 {
+    Complex complex;
+    InfoPanel info;
+    Dog dog;
+    int playerX;
+    int playerY;
+    int playerSpeed;
+    int playerWidth;
+    int playerHeight;
+    Image player;
+    Font font18;
+    int[] enemyX;
+    int[] enemyY;
+    int[] enemySpeedX;
+    bool finished;
+    Image enemy;
+    int numEnemies;
+
+
     public void Run()
     {
-        Font font18 = new Font("data/Joystix.ttf", 18);
-        Image player = new Image("data/imgRetro/playerStaticr.png");
-        int playerX = 50;
-        int playerY = 120;
-        int playerSpeed = 4;
-        int playerWidth = 32;
-        int playerHeight = 64;
+        font18 = new Font("data/Joystix.ttf", 18);
+        player = new Image("data/imgRetro/playerStaticr.png");
+        playerX = 50;
+        playerY = 120;
+        playerSpeed = 4;
+        playerWidth = 32;
+        playerHeight = 64;
 
         Random rnd = new Random();
-        int numEnemies = 2;
-        int[] enemyX = new int[numEnemies];
-        int[] enemyY = new int[numEnemies];
-        int[] enemySpeedX = new int[numEnemies];
+        numEnemies = 2;
+        enemyX = new int[numEnemies];
+        enemyY = new int[numEnemies];
+        enemySpeedX = new int[numEnemies];
         for (int i = 0; i < numEnemies; i++)
         {
             enemyX[i] = rnd.Next(200, 800);
@@ -39,16 +59,21 @@ class Game
         }
         int enemyWidth = 64;
         int enemyHeight = 64;
-        Image enemy = new Image("data/imgRetro/enemyStatic.png");
+        enemy = new Image("data/imgRetro/enemyStatic.png");
 
-        Complex complex = new Complex();
-        InfoPanel info = new InfoPanel();
-        Dog dog = new Dog();
+        complex = new Complex();
+        info = new InfoPanel();
+        dog = new Dog();
         dog.MoveTo(400, 200);
 
-        bool finished = false;
+        finished = false;
 
         // Game Loop
+        MainLoop();
+    }
+
+    public void MainLoop()
+    {
         do
         {
             // Update screen
@@ -72,8 +97,6 @@ class Game
             // Check input by the user
             if (SdlHardware.KeyPressed(SdlHardware.KEY_RIGHT))
                 playerX += playerSpeed;
-            if (SdlHardware.KeyPressed(SdlHardware.KEY_LEFT))
-                playerX -= playerSpeed;
             // TO DO: Complete with remaining keys
 
             if (SdlHardware.KeyPressed(SdlHardware.KEY_ESC))
@@ -92,3 +115,4 @@ class Game
         while (!finished);
     }
 }
+
