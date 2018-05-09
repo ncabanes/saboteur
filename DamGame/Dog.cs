@@ -3,9 +3,9 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
- * 0.01, 09-may-2018, Nacho: First version, almost empty skeleton
  * 0.02. 09-may-2018, López, Rebollo: Implemented movement and sprites
-  */
+ * 0.01, 09-may-2018, Nacho: First version, almost empty skeleton
+ */
 
 class Dog : Sprite
 {

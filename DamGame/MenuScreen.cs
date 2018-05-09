@@ -4,9 +4,10 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.02, 09-may-2018, Victor, Miguel, Gonzalo: 
+ *      Attributes and method GetChosenOption() added, but not finished
+ *      Background image
  * 0.01, 09-may-2018, Nacho: First version, almost empty skeleton
- * 0.02, 09-may-2018, Victor, Miguel, Gonzalo: Second version with attributes 
- * and method GetChosenOption() added.
  */
 
 class MenuScreen
@@ -19,7 +20,9 @@ class MenuScreen
     public void Run()
     {
         Font font18 = new Font("data/Joystix.ttf", 18);
+        Image background = new Image("data/imgRetro/menuBackground.png");
         SdlHardware.ClearScreen();
+        SdlHardware.DrawHiddenImage(background, 0, 0);
 
         SdlHardware.WriteHiddenText("Saboteur",
             40, 10,

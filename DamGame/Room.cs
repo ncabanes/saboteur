@@ -3,12 +3,14 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.02, 09-may-2018, Santana,Saorin: Replace with tiles for the real map 
+ *      of the room (started)
  * 0.01, 09-may-2018, Nacho: First version, almost empty skeleton
- * 0.01, 09-may-2018, Santana,Saorin: Replace with tiles for the real map of the room
  */
 
 class Room
 {
+    Image tmpBackground;
     char[,] background;
     Image brick;
     Image ground;
@@ -17,17 +19,21 @@ class Room
 
     public Room()
     {
+        tmpBackground = new Image("data/imgRetro/exampleRoom.png");
         background = new char[30,17];
-        brick = new Image("tileWall1.png");
-        ground = new Image("tileFloor.png");
-        window = new Image("tileWall2.png");
-        door = new Image("tileWall3.png");
+        brick = new Image("data/imgRetro/tileWall1.png");
+        ground = new Image("data/imgRetro/tileFloor.png");
+        window = new Image("data/imgRetro/tileWall2.png");
+        door = new Image("data/imgRetro/tileWall3.png");
     }
 
     public void Draw()
     {
         // TO DO: Replace with tiles for the real map of the room
-        for(int i=0;i<30;i++)
+        SdlHardware.DrawHiddenImage(tmpBackground, 32, 0);
+
+        // TO DO: This part is not finished, as the array is still empty
+        for (int i=0;i<30;i++)
         {
             for(int j=0;j<17;j++)
             {
