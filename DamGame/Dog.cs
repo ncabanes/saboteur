@@ -32,6 +32,7 @@ class Dog : Sprite
 
     public override void Move()
     {
+        //TO DO change direction
         x += xSpeed;
         frame++;
         if( frame > 10)
