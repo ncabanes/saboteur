@@ -20,11 +20,15 @@ class Room
     Image ground;
     Image window;
     Image door;
+    int roomWidth;
+    int roomHeight;
 
     public Room()
     {
+        roomWidth = 33;
+        roomHeight = 17;
         tmpBackground = new Image("data/imgRetro/exampleRoom.png");
-        background = new char[35, 17];
+        background = new char[roomWidth, roomHeight];
         brick = new Image("data/imgRetro/tileWall1.png");
         ground = new Image("data/imgRetro/tileFloor.png");
         window = new Image("data/imgRetro/tileWall2.png");
@@ -75,14 +79,14 @@ class Room
         // SdlHardware.DrawHiddenImage(tmpBackground, 32, 0);
         LoadRoom("data/room065.dat");
         // TO DO: This part is not finished, as the array is still empty
-        for (int i = 0; i < 33; i++)
+        for (int i = 0; i < roomWidth; i++)
         {
-            for (int j = 0; j < 17; j++)
+            for (int j = 0; j < roomHeight; j++)
             {
                 switch (background[i,j])
                 {
                     case 'b':
-                        SdlHardware.DrawHiddenImage(brick, i*32, j*32);
+                        SdlHardware.DrawHiddenImage(brick, i * 32, j * 32);
                         break;
                     case 'g':
                         SdlHardware.DrawHiddenImage(ground, i * 32, j * 32);
