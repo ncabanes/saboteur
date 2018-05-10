@@ -1,13 +1,17 @@
-﻿/// Room - Represents one of the rooms that the user can visit
-
+﻿
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.03, 10-may-2018, Pestana, Saorin: Load map from a file. 
+ *  
  * 0.02, 09-may-2018, Santana,Saorin: Replace with tiles for the real map 
  *      of the room (started)
  * 0.01, 09-may-2018, Nacho: First version, almost empty skeleton
  */
 
+using System;
+using System.IO;
+/// Room - Represents one of the rooms that the user can visit
 class Room
 {
     Image tmpBackground;
@@ -20,22 +24,60 @@ class Room
     public Room()
     {
         tmpBackground = new Image("data/imgRetro/exampleRoom.png");
-        background = new char[30,17];
+        background = new char[35, 17];
         brick = new Image("data/imgRetro/tileWall1.png");
         ground = new Image("data/imgRetro/tileFloor.png");
         window = new Image("data/imgRetro/tileWall2.png");
-        door = new Image("data/imgRetro/tileWall3.png");
+        door = new Image("data/imgRetro/tileWall3.png");      
+    }
+
+    private void LoadRoom(string levelFileName)
+    {
+        StreamReader input = new StreamReader(levelFileName);
+        string line = "";
+        int row = 0;
+        do
+        {
+            line = input.ReadLine();
+            if (line != null)
+            {
+                for (int col = 0; col < line.Length; col++)
+                {
+                    switch (line[col])
+                    {
+                        case 'b':
+                            background[col, row] = 'b';
+                            break;
+                        case 'g':
+                            background[col, row] = 'g';
+                            break;
+                        case 'w':
+                            background[col, row] = 'w';
+                            break;
+                        case 'd':
+                            background[col, row] = 'd';
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                row++;
+            }
+        }
+        while (line != null);
+
+        input.Close();      
     }
 
     public void Draw()
     {
         // TO DO: Replace with tiles for the real map of the room
-        SdlHardware.DrawHiddenImage(tmpBackground, 32, 0);
-
+        // SdlHardware.DrawHiddenImage(tmpBackground, 32, 0);
+        LoadRoom("data/room065.dat");
         // TO DO: This part is not finished, as the array is still empty
-        for (int i=0;i<30;i++)
+        for (int i = 0; i < 33; i++)
         {
-            for(int j=0;j<17;j++)
+            for (int j = 0; j < 17; j++)
             {
                 switch (background[i,j])
                 {
@@ -56,8 +98,6 @@ class Room
                 }
             }
         }
-
-        
     }
 
     public bool CanMoveTo(int x1, int y1, int x2, int y2)
