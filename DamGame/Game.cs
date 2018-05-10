@@ -4,6 +4,8 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.03, 10-may-2018, Jose Vilaplana, Moises Encinas, Marcos Cervantes: 
+ *      Split in function and implement player up, down move and fire check.
  * 0.02, 08-may-2018, Jose Vilaplana, Moises Encinas, Marcos Cervantes: 
  *      Convert the variables in atributes and put the game loop in a function
  *      Uses class Player & Enemy

@@ -63,7 +63,9 @@
     <Compile Include="Room.cs" />
     <Compile Include="Saboteur.cs" />
     <Compile Include="SdlHardware.cs" />
+    <Compile Include="Shuriken.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="ThrowableItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
