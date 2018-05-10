@@ -134,6 +134,8 @@ class SdlHardware
 
         Sdl.SDL_BlitSurface(textoComoImagen, ref origen,
             hiddenScreen, ref dest);
+
+        Sdl.SDL_FreeSurface(textoComoImagen);
     }
 
     // Scroll Methods

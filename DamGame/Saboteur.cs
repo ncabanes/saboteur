@@ -1,5 +1,4 @@
-﻿/// Saboteur - The main class, to launch the Menu, Game and other screens
-
+﻿
 /* Part of Saboteur Remake
  * 
  * Changes:
@@ -11,6 +10,7 @@
  *     First version, displays all screens in sequence
  */
 
+/// Saboteur - The main class, to launch the Menu, Game and other screens
 class Saboteur
 {
     public Saboteur()
@@ -26,30 +26,34 @@ class Saboteur
         IntroScreen intro = new IntroScreen();
         intro.Run();
 
-        MenuScreen menu = new MenuScreen();
-        menu.Run();
-        switch (menu.GetChosenOption())
+        MenuScreen menu = new MenuScreen(); 
+
+        do
         {
-            case MenuScreen.MenuOption.Game:
-                Game g = new Game();
-                g.Run();
-                break;
+            menu.Run();
+            switch (menu.GetChosenOption())
+            {
+                case MenuScreen.MenuOption.Game:
+                    Game g = new Game();
+                    g.Run();
+                    break;
 
-            case MenuScreen.MenuOption.Help:
-                HelpScreen help = new HelpScreen();
-                help.Run();
-                break;
+                case MenuScreen.MenuOption.Help:
+                    HelpScreen help = new HelpScreen();
+                    help.Run();
+                    break;
 
-            case MenuScreen.MenuOption.Credits:
-                CreditsScreen credits = new CreditsScreen();
-                credits.Run();
-                break;
+                case MenuScreen.MenuOption.Credits:
+                    CreditsScreen credits = new CreditsScreen();
+                    credits.Run();
+                    break;
 
-            case MenuScreen.MenuOption.Scores:
-                HiScoresScreen hiScores = new HiScoresScreen();
-                hiScores.Run();
-                break;
-        }
+                case MenuScreen.MenuOption.Scores:
+                    HiScoresScreen hiScores = new HiScoresScreen();
+                    hiScores.Run();
+                    break;
+            }
+        } while (menu.GetChosenOption() != MenuScreen.MenuOption.Exit);
     }
 
     // -------

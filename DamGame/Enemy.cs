@@ -4,7 +4,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
- * 0.03, 10-may-2018, Guillermo Pastor, Brandon Blasco, Javier Cases: constructor
+ * 0.03, 10-may-2018, Guillermo Pastor, Brandon Blasco, Javier Cases: Animation
  * 0.02, 09-may-2018, Raul Gogna, Brandon Blasco, Javier Cases: constructor
  * 0.01, 09-may-2018, Nacho: First version, empty skeleton
  */
@@ -29,6 +29,8 @@ class Enemy : Sprite
             new string[] { "data/imgRetro/enemyWalking1l.png",
                 "data/imgRetro/enemyWalking2l.png",
                 "data/imgRetro/enemyWalking3l.png"});
+        // TO DO: variables width & heigth
+       
     }
 
     public override void Move()
