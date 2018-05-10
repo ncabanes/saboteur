@@ -11,13 +11,13 @@ class CreditsScreen
 {
     protected string[] names = { "Original game: Clive Townsend",
         "Raul Gogna",
-        "Miguel Pastor","Angel Rebollo", "Almudena López", "Querubin Santana",
+        "Miguel Pastor","Angel Rebollo", "Almudena Lopez", "Querubin Santana",
         "Marcos Cervantes", "Moisex Encinas", "Cesar Martin", "Daniel Miquel",
-        "Gillermo Pastor", "Javier Cases", "Renata Pestena", "Brrandom Blasco",
-        "Jose Vilaplana", "Gonzalo Martínez", "Miguel Garcia Gil",
-        "Victor Tébar", "Luis Selles", "Miguel Puerta", "Iroquos Pliskin", "Javier Saorin",
+        "Gillermo Pastor", "Javier Cases", "Renata Pestana", "Brrandom Blasco",
+        "Jose Vilaplana", "Gonzalo Martinez", "Miguel Garcia Gil",
+        "Victor Tebar", "Luis Selles", "Miguel Puerta", "Iroquos Pliskin", "Javier Saorin",
         "Luis Martinez-Montalvo Giner", "Christian Cabrera Cerna",
-        "Pedro Coloma", "Boss Project: Nacho Cabanes"};
+        "Pedro Coloma", "Boss Project: Nacho Cabanes/Dios"};
     protected short yText = 40;
     public void Run()
     {
