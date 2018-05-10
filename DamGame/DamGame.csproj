@@ -52,6 +52,7 @@
     <Compile Include="Font.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="HelpScreen.cs" />
+    <Compile Include="HiScore.cs" />
     <Compile Include="HiScoresScreen.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="InfoPanel.cs" />
