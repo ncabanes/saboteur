@@ -62,39 +62,69 @@ class Game
         do
         {
             // Update screen
-            SdlHardware.ClearScreen();
-
-            complex.GetCurrentRoom().Draw();
-            info.Draw();
-            dog.DrawOnHiddenScreen();
-            player.DrawOnHiddenScreen();
-            for (int i = 0; i < numEnemies; i++)
-                enemies[i].DrawOnHiddenScreen();
-            SdlHardware.ShowHiddenScreen();
-
+            drawElements();
 
             // Check input by the user
-            if (SdlHardware.KeyPressed(SdlHardware.KEY_RIGHT))
-                player.MoveRight();
-            if (SdlHardware.KeyPressed(SdlHardware.KEY_LEFT))
-                player.MoveLeft();
-            // TO DO: Complete with remaining keys
-
-            if (SdlHardware.KeyPressed(SdlHardware.KEY_ESC))
-                finished = true;
+            checkInput();
 
             // Move enemies, background, etc 
-            // TO DO
-            dog.Move();
-            enemies[0].Move();
+            moveElements();
 
             // Check collisions and apply game logic
-            // TO DO
+            checkCollisions();
 
             // Pause till next frame (20 ms = 50 fps)
-            SdlHardware.Pause(20);
+            pauseTillNextFrame(20);
+            
         }
         while (!finished);
+    }
+
+    private void checkCollisions()
+    {
+        //TO DO
+
+    }
+
+    private void pauseTillNextFrame(int ms)
+    {
+        SdlHardware.Pause(ms);
+    }
+
+    private void moveElements()
+    {
+        // TO DO
+        dog.Move();
+        enemies[0].Move();
+    }
+
+    private void checkInput()
+    {
+        if (SdlHardware.KeyPressed(SdlHardware.KEY_RIGHT))
+            player.MoveRight();
+        if (SdlHardware.KeyPressed(SdlHardware.KEY_LEFT))
+            player.MoveLeft();
+        /*if (SdlHardware.KeyPressed(SdlHardware.KEY_SPC))
+            player.Fire();*/
+        if (SdlHardware.KeyPressed(SdlHardware.KEY_UP))
+            player.Jump();
+        if (SdlHardware.KeyPressed(SdlHardware.KEY_DOWN))
+            player.Duck();
+        if (SdlHardware.KeyPressed(SdlHardware.KEY_ESC))
+            finished = true;
+    }
+
+    private void drawElements()
+    {
+        SdlHardware.ClearScreen();
+
+        complex.GetCurrentRoom().Draw();
+        info.Draw();
+        dog.DrawOnHiddenScreen();
+        player.DrawOnHiddenScreen();
+        for (int i = 0; i < numEnemies; i++)
+            enemies[i].DrawOnHiddenScreen();
+        SdlHardware.ShowHiddenScreen();
     }
 }
 
