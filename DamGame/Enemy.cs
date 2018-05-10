@@ -13,14 +13,11 @@ class Enemy : Sprite
 {
     protected bool die;
     int frame;
-    int xDirection;
-
 
     public Enemy()
     {
         LoadImage("data/imgRetro/enemyStatic.png");
         xSpeed = -1;
-        xDirection = 1;
 
         frame = 1;
         LoadSequence(RIGHT,
@@ -33,11 +30,6 @@ class Enemy : Sprite
                 "data/imgRetro/enemyWalking2l.png",
                 "data/imgRetro/enemyWalking3l.png"});
     }
-
-   /* public Enemy(string[] images) : base(images)
-    {
-        this.images = images;
-    }*/
 
     public override void Move()
     {
