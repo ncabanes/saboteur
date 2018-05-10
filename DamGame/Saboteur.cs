@@ -3,6 +3,10 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.03, 10-may-2018 Victor,Gonzalo:
+ *     Displays the intro screen and menu screen.
+ *     Lets the user choose the screen.
+ * 
  * 0.01, 09-may-2018, Nacho: 
  *     First version, displays all screens in sequence
  */
@@ -22,20 +26,30 @@ class Saboteur
         IntroScreen intro = new IntroScreen();
         intro.Run();
 
-        CreditsScreen credits = new CreditsScreen();
-        credits.Run();
-
-        HelpScreen help = new HelpScreen();
-        help.Run();
-
-        HiScoresScreen hiScores = new HiScoresScreen();
-        hiScores.Run();
-
         MenuScreen menu = new MenuScreen();
         menu.Run();
+        switch (menu.GetChosenOption())
+        {
+            case MenuScreen.MenuOption.Game:
+                Game g = new Game();
+                g.Run();
+                break;
 
-        Game g = new Game();
-        g.Run();
+            case MenuScreen.MenuOption.Help:
+                HelpScreen help = new HelpScreen();
+                help.Run();
+                break;
+
+            case MenuScreen.MenuOption.Credits:
+                CreditsScreen credits = new CreditsScreen();
+                credits.Run();
+                break;
+
+            case MenuScreen.MenuOption.Scores:
+                HiScoresScreen hiScores = new HiScoresScreen();
+                hiScores.Run();
+                break;
+        }
     }
 
     // -------

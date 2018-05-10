@@ -4,6 +4,9 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.03, 10-may-2018, Victor, Gonzalo:
+ *      Menu screen fully functional
+ * 
  * 0.02, 09-may-2018, Victor, Miguel, Gonzalo: 
  *      Attributes and method GetChosenOption() added, but not finished
  *      Background image
@@ -12,59 +15,80 @@
 
 class MenuScreen
 {
-    public int OptionGame { get; set; }
-    public int OptionHelp { get; set; }
-    public int OptionCredits { get; set; }
-    public int OptionHiScores { get; set; }
+    public enum MenuOption { Menu, Game, Help, Credits, Scores , Exit};
+    private MenuOption chosenOption;
 
     public void Run()
     {
-        Font font18 = new Font("data/Joystix.ttf", 18);
+        chosenOption = MenuOption.Menu;
+        Font font32 = new Font("data/Joystix.ttf", 32);
+        Font font24 = new Font("data/Joystix.ttf", 24);
         Image background = new Image("data/imgRetro/menuBackground.png");
         SdlHardware.ClearScreen();
         SdlHardware.DrawHiddenImage(background, 0, 0);
 
         SdlHardware.WriteHiddenText("Saboteur",
-            40, 10,
-            0x22, 0x22, 0xFF,
-            font18);
+            500, 80,
+            0xff, 0x00, 0x00,
+            font32);
 
         SdlHardware.WriteHiddenText("1. Start mission",
-            40, 40,
+            500, 140,
             0xFF, 0xFA, 0x00,
-            font18);
+            font24);
 
         SdlHardware.WriteHiddenText("2. Help",
-            40, 60,
+            500, 180,
             0xFF, 0xFA, 0x00,
-            font18);
+            font24);
 
         SdlHardware.WriteHiddenText("3. Credits",
-            40, 80,
+            500, 220,
             0xFF, 0xFA, 0x00,
-            font18);
+            font24);
 
-        SdlHardware.WriteHiddenText("4. HiScores",
-            40, 100,
+        SdlHardware.WriteHiddenText("4. Hi-Scores",
+            500, 260,
             0xFF, 0xFA, 0x00,
-            font18);
+            font24);
 
-        SdlHardware.WriteHiddenText("Press Space to continue...",
-            40, 120,
-            0x22, 0x22, 0xFF,
-            font18);
+        SdlHardware.WriteHiddenText("5. Quit",
+            500, 300,
+            0xFF, 0xFA, 0x00,
+            font24);
 
         SdlHardware.ShowHiddenScreen();
+
         do
         {
             SdlHardware.Pause(50);  // To avoid 100% CPU usage
+
+            if (SdlHardware.KeyPressed(SdlHardware.KEY_1))
+            {
+                chosenOption = MenuOption.Game;
+            }
+            else if (SdlHardware.KeyPressed(SdlHardware.KEY_2))
+            {
+                chosenOption = MenuOption.Help;
+            }
+            else if (SdlHardware.KeyPressed(SdlHardware.KEY_3))
+            {
+                chosenOption = MenuOption.Credits;
+            }
+            else if (SdlHardware.KeyPressed(SdlHardware.KEY_4))
+            {
+                chosenOption = MenuOption.Scores;
+            }
+            else if (SdlHardware.KeyPressed(SdlHardware.KEY_5))
+            {
+                chosenOption = MenuOption.Exit;
+            }
         }
-        while (!SdlHardware.KeyPressed(SdlHardware.KEY_SPC));
+        while (chosenOption == MenuOption.Menu);
     }
 
-    public int GetChosenOption(int num)
+    public MenuOption GetChosenOption()
     {
-        // TODO
-        return 1;
+        return chosenOption;
     }
 }
