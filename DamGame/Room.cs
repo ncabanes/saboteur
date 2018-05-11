@@ -2,6 +2,8 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 
+ * 0.07, 11-may-2018, Daniel Miquel, Luis Martin: Room with stairs. 
  * 0.05, 11-may-2018, Santana, Saorin, Sabater: Save data info of close rooms from a file. 
  * 0.04. 11-may-2018, Nacho: Rooms with more detailed definition can be read from file
  * 0.03, 10-may-2018, Pestana, Saorin: Load map from a file. 
@@ -22,6 +24,8 @@ class Room
     Image ground;
     Image window;
     Image door;
+    Image tileStairLeft;
+    Image tileStairRight;
     int roomWidth;
     int roomHeight;
     int currentRoom;
@@ -39,7 +43,9 @@ class Room
         brick = new Image("data/imgRetro/tileWall1.png");
         ground = new Image("data/imgRetro/tileFloor.png");
         window = new Image("data/imgRetro/tileWall2.png");
-        door = new Image("data/imgRetro/tileWall3.png");      
+        door = new Image("data/imgRetro/tileWall3.png");
+        tileStairLeft = new Image("data/imgRetro/tileStairLeft.png");
+        tileStairRight = new Image("data/imgRetro/tileStairRight.png");
     }
 
     private void LoadRoom(string levelFileName)
@@ -67,6 +73,12 @@ class Room
                             break;
                         case 'd':
                             background[col, row] = 'd';
+                            break;
+                        case '<':
+                            background[col, row] = '<';
+                            break;
+                        case '>':
+                            background[col, row] = '>';
                             break;
                         default:
                             break;
@@ -130,6 +142,12 @@ class Room
                         break;
                     case 'd':
                         SdlHardware.DrawHiddenImage(door, i * 32, j * 32);
+                        break;
+                    case '<':
+                        SdlHardware.DrawHiddenImage(tileStairLeft, i * 32, j * 32);
+                        break;
+                    case '>':
+                        SdlHardware.DrawHiddenImage(tileStairRight, i * 32, j * 32);
                         break;
                     default:
                         break;
