@@ -4,6 +4,9 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.04. 11-may-2018, Nacho: 
+ *      Simple collisions with the dog
+ *      InfoPanel is animated to display energy and time
  * 0.03, 10-may-2018, Jose Vilaplana, Moises Encinas, Marcos Cervantes: 
  *      Split in function and implement player up, down move and fire check.
  * 0.02, 08-may-2018, Jose Vilaplana, Moises Encinas, Marcos Cervantes: 
@@ -84,8 +87,12 @@ class Game
 
     private void checkCollisions()
     {
-        //TO DO
+        //TO DO: Complete with elements in a room
+        if (player.CollisionsWith(dog))
+            info.Energy--;
 
+        if ((info.Energy == 0) || (info.Time == 0))
+            finished = true;
     }
 
     private void pauseTillNextFrame(int ms)
@@ -95,9 +102,10 @@ class Game
 
     private void moveElements()
     {
-        // TO DO
+        // TO DO: Animate all elements in a Room
         dog.Move();
         enemies[0].Move();
+        info.Animate();
     }
 
     private void checkInput()
