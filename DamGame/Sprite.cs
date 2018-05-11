@@ -2,9 +2,9 @@
  * Sprite.cs - A basic graphic element to inherit from
  * 
  * Changes:
+ * 0.04. 11-may-2018, Nacho: Added "SetGameUpdatesPerFrame"
  * 0.01, 24-jul-2013: Initial version, based on SdlMuncher 0.12
  */
-
 
 class Sprite
 {
@@ -17,6 +17,8 @@ class Sprite
     protected Image[][] sequence;
     protected bool containsSequence;
     protected int currentFrame;
+    protected int updatesPerFrame;  // To change the image atfer several updates
+    protected int currentFrameTick;
 
     protected byte numDirections = 11;
     protected byte currentDirection;
@@ -157,11 +159,19 @@ class Sprite
 
     public void NextFrame()
     {
+        if (!containsSequence)
+            return;
+
+        currentFrameTick++;
+        if (currentFrameTick < updatesPerFrame)
+            return;
+
+        currentFrameTick = 0;
         currentFrame++;
         if (currentFrame >= sequence[currentDirection].Length)
             currentFrame = 0;
     }
-        
+
     public void ChangeDirection(byte newDirection)
     {
         if (!containsSequence) return;
@@ -200,5 +210,10 @@ class Sprite
         y = startY;
     }
 
+    /// Sets number of calls to "NextFrame" which really change the visible image
+    public void SetGameUpdatesPerFrame(int updates)
+    {
+        updatesPerFrame = updates;
+    }
 
 }

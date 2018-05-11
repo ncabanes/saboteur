@@ -3,6 +3,8 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.04. 11-may-2018, Nacho: Uses "SetGameUpdatesPerFrame" from Sprite
+ * 0.03. 10-may-2018, López, Rebollo: Implemented change of direction
  * 0.02. 09-may-2018, López, Rebollo: Implemented movement and sprites
  * 0.01, 09-may-2018, Nacho: First version, almost empty skeleton
  */
@@ -28,11 +30,14 @@ class Dog : Sprite
         width = 128;
         height = 80;
         xSpeed = 2;
+        SetGameUpdatesPerFrame(10);
     }
 
     public override void Move()
     {
-        //Change direction
+        NextFrame();
+
+        //Change direction (still no collisions checked)
         if (x < 1024 - width && x > 0)
             x += xSpeed;
         else
@@ -41,14 +46,5 @@ class Dog : Sprite
             xSpeed *= -1;
             x += xSpeed;
         }
-        
-        //Speed
-        frame++;
-        if (frame > 10)
-        {
-            NextFrame();
-            frame = 1;
-        }
-
     }
 }
