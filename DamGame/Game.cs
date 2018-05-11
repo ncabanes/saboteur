@@ -110,6 +110,7 @@ class Game
         dog.Move();
         enemies[0].Move();
         info.Animate();
+        player.Move();
         if (weapon != null)
             weapon.Move();
     }
