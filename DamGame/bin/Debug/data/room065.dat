@@ -15,3 +15,12 @@ gggggggggggggggggggwwwwwwwwwwwwww
 ggggggggggggggggggggggggggggggggg
 ggggggggggggggggggggggggggggggggg
 ggggggggggggggggggggggggggggggggg
+room=065
+left=064
+right=066
+up=NOT
+down=NOT
+dogs=1=400,200
+enemies=2=200,200=500,200
+cameras=0
+items=1=stone,600,200
