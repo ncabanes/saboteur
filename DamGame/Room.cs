@@ -169,8 +169,12 @@ class Room
             return rightRoom;
         else if (player.GetX() <= 0 - (player.GetWidth() / 2))
             return leftRoom;
+        else if (player.GetY() <= 0 - (player.GetHeight() / 2))
+            return upRoom;
+        else if(player.GetY() >= (roomHeight * 17) + (player.GetHeight() / 2))
+            return bottomRoom;
         else
-            return -1;
+        return -1;
         // TODO: go up or down checking stairs.
     }
 }
