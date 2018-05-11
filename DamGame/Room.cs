@@ -2,6 +2,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.04. 11-may-2018, Nacho: Rooms with more detailed definition can be read from file
  * 0.03, 10-may-2018, Pestana, Saorin: Load map from a file. 
  *  
  * 0.02, 09-may-2018, Santana,Saorin: Replace with tiles for the real map 
@@ -9,8 +10,8 @@
  * 0.01, 09-may-2018, Nacho: First version, almost empty skeleton
  */
 
-using System;
 using System.IO;
+
 /// Room - Represents one of the rooms that the user can visit
 class Room
 {
@@ -40,7 +41,7 @@ class Room
         StreamReader input = new StreamReader(levelFileName);
         string line = "";
         int row = 0;
-        do
+        for (int l = 0; l < roomHeight; l++)
         {
             line = input.ReadLine();
             if (line != null)
@@ -68,7 +69,7 @@ class Room
                 row++;
             }
         }
-        while (line != null);
+        // TO DO: Read and parse extra room details
 
         input.Close();      
     }
