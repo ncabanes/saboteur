@@ -2,6 +2,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.05, 11-may-2018, Santana, Saorin, Sabater: Save data info of close rooms from a file. 
  * 0.04. 11-may-2018, Nacho: Rooms with more detailed definition can be read from file
  * 0.03, 10-may-2018, Pestana, Saorin: Load map from a file. 
  *  
@@ -23,6 +24,11 @@ class Room
     Image door;
     int roomWidth;
     int roomHeight;
+    int currentRoom;
+    int leftRoom;
+    int rightRoom;
+    int upRoom;
+    int bottomRoom;
 
     public Room()
     {
@@ -69,7 +75,34 @@ class Room
                 row++;
             }
         }
-        // TO DO: Read and parse extra room details
+        // Read and parse extra room details
+
+        string roomNumber = input.ReadLine().Split('=')[1];
+        currentRoom = int.Parse(roomNumber);
+
+        roomNumber = input.ReadLine().Split('=')[1];
+        if (roomNumber.ToUpper() != "NOT")
+            leftRoom = int.Parse(roomNumber);
+        else
+            leftRoom = -1;
+
+        roomNumber = input.ReadLine().Split('=')[1];
+        if (roomNumber.ToUpper() != "NOT")
+            rightRoom = int.Parse(roomNumber);
+        else
+            rightRoom = -1;
+
+        roomNumber = input.ReadLine().Split('=')[1];
+        if (roomNumber.ToUpper() != "NOT")
+            upRoom = int.Parse(roomNumber);
+        else
+            upRoom = -1;
+
+        roomNumber = input.ReadLine().Split('=')[1];
+        if (roomNumber.ToUpper() != "NOT")
+            bottomRoom = int.Parse(roomNumber);
+        else
+            bottomRoom = -1;
 
         input.Close();      
     }
@@ -103,10 +136,23 @@ class Room
                 }
             }
         }
+
     }
 
     public bool CanMoveTo(int x1, int y1, int x2, int y2)
     {
         return true;
+    }
+
+    /// Return the number of the next room if is accesible, if it is not return -1.
+    public int CheckIfNewRoom(Player player)
+    {
+        if (player.GetX() >= (roomWidth * 32) + (player.GetWidth() / 2))
+            return rightRoom;
+        else if (player.GetX() <= 0 - (player.GetWidth() / 2))
+            return leftRoom;
+        else
+            return -1;
+        // TODO: go up or down checking stairs.
     }
 }
