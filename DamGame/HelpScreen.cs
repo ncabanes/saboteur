@@ -3,8 +3,9 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.03, 11-may-2018, Nacho: keypress to return instead of timed pause
+ * 0.02, 10-may-2018, López, Rebollo: display help
  * 0.01, 09-may-2018, Nacho: First version, almost empty skeleton
- * 0.02, 10-may-2018, López, Rebollo, display help
  */
 
 using System;
@@ -23,7 +24,9 @@ class HelpScreen
         "Z       Joystick DOWN   CLIMB DOWN if on ladder, or DUCK if still",
         "M       Joystick RIGHT  MOVE RIGHT,",
         "N       Joystick LEFT   MOVE LEFT",
-        "SPACE   Joystick FIRE   THROW/USE/TAKE object, or PUNCH if none"};
+        "SPACE   Joystick FIRE   THROW/USE/TAKE object, or PUNCH if none",
+        " ",
+        "Press space to return..."};
 
 
     public void Run()
@@ -42,6 +45,10 @@ class HelpScreen
         }
 
         SdlHardware.ShowHiddenScreen();
-        SdlHardware.Pause(2000);
+        do
+        {
+            SdlHardware.Pause(50);  // To avoid 100% CPU usage
+        }
+        while (!SdlHardware.KeyPressed(SdlHardware.KEY_SPC));
     }
 }
