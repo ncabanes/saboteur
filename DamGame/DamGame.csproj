@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Brick.cs" />
     <Compile Include="Complex.cs" />
     <Compile Include="CreditsScreen.cs" />
     <Compile Include="Dog.cs" />

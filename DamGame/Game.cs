@@ -4,6 +4,8 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.05. 11-may-2018, Rebollo, Lopez:
+ *       Added shuriken
  * 0.04. 11-may-2018, Nacho: 
  *      Simple collisions with the dog
  *      InfoPanel is animated to display energy and time
@@ -32,6 +34,7 @@ class Game
     Enemy[] enemies;
     int numEnemies;
     Player player;
+    Shuriken weapon;
 
 
     public void Run()
@@ -57,6 +60,7 @@ class Game
         dog.MoveTo(400, 200);
 
         finished = false;
+        weapon = null;
 
         // Game Loop
         MainLoop();
@@ -106,6 +110,8 @@ class Game
         dog.Move();
         enemies[0].Move();
         info.Animate();
+        if (weapon != null)
+            weapon.Move();
     }
 
     private void checkInput()
@@ -114,8 +120,11 @@ class Game
             player.MoveRight();
         if (SdlHardware.KeyPressed(SdlHardware.KEY_LEFT))
             player.MoveLeft();
-        /*if (SdlHardware.KeyPressed(SdlHardware.KEY_SPC))
-            player.Fire();*/
+        if (SdlHardware.KeyPressed(SdlHardware.KEY_SPC))
+        {
+            weapon = new Shuriken();
+            weapon.MoveTo(player.GetX() + 40, player.GetY() + 40);
+        }
         if (SdlHardware.KeyPressed(SdlHardware.KEY_UP))
             player.Jump();
         if (SdlHardware.KeyPressed(SdlHardware.KEY_DOWN))
@@ -132,6 +141,8 @@ class Game
         info.Draw();
         dog.DrawOnHiddenScreen();
         player.DrawOnHiddenScreen();
+        if(weapon != null)
+            weapon.DrawOnHiddenScreen();
         for (int i = 0; i < numEnemies; i++)
             enemies[i].DrawOnHiddenScreen();
         SdlHardware.ShowHiddenScreen();
