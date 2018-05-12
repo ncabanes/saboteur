@@ -3,6 +3,10 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.06, 12-may-2018, Nacho: 
+ *      Error checking when writing and reading files
+ *      New data are added to the data list
+ *      All data are saved, instead of appending the new one
  * 0.05, 11-may-2018, Pedro Coloma, Miguel Pastor: 
  *      Save and read scores in files (no error checking)
  * 0.03, 10-may-2018, Daniel Miquel, Pedro Coloma: AddNewHiScore and CompareScore
@@ -26,13 +30,13 @@ class HiScoresScreen
             40, 10,
             0x22, 0xFF, 0x22,
             font18);
-        /*
+        
         AddNewHiScore(100, "Jose");
         AddNewHiScore(250, "dfg");
         AddNewHiScore(342, "asf");
 
         ReadHiScoreFile();
-        */
+
         for (int i = 0; i < hiScores.Count; i++)
         {
             SdlHardware.WriteHiddenText(hiScores[i].GetName() + " "
@@ -51,36 +55,53 @@ class HiScoresScreen
         while (!SdlHardware.KeyPressed(SdlHardware.KEY_SPC));
     }
 
-    /*
+    
     public void AddNewHiScore(int points, string name)
     {
-        StreamWriter scores = File.AppendText("HiScore.dat");
-        scores.WriteLine(points + ":" + name);
-        scores.Close();
+        HiScore score = new HiScore(points, name);
+        hiScores.Add(score);
+        try
+        {
+            StreamWriter scores = new StreamWriter("HiScore.dat");
+            for (int i = 0; i < hiScores.Count; i++)
+                scores.WriteLine(hiScores[i].GetPoints() +
+                    ":" + hiScores[i].GetName());
+            scores.Close();
+        }
+        catch (Exception)
+        {
+            // TO DO: Warn the user?
+        }
     }
 
     public void ReadHiScoreFile()
     {
-        StreamReader scores = new StreamReader("HiScore.dat");
-
-        string line;
-        string[] data;
-        do
+        try
         {
-            line = scores.ReadLine();
-            if (line != null)
+            StreamReader scores = new StreamReader("HiScore.dat");
+
+            string line;
+            string[] data;
+            do
             {
-                data = line.Split(':');
-                HiScore score = new HiScore(Convert.ToInt32(data[0]), data[1]);
-                hiScores.Add(score);
-            }
-        } while (line != null);
-        scores.Close();
+                line = scores.ReadLine();
+                if (line != null)
+                {
+                    data = line.Split(':');
+                    HiScore score = new HiScore(Convert.ToInt32(data[0]), data[1]);
+                    hiScores.Add(score);
+                }
+            } while (line != null);
+            scores.Close();
 
-        hiScores.Sort(CompareScore);
-
+            hiScores.Sort(CompareScore);
+        }
+        catch (Exception)
+        {
+            // TO DO: Warn the user?
+        }
     }
-    */
+    
 
     public int CompareScore(HiScore s1, HiScore s2)
     {
