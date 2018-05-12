@@ -3,10 +3,14 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.05, 11-may-2018, Pedro Coloma, Miguel Pastor: 
+ *      Save and read scores in files (no error checking)
  * 0.03, 10-may-2018, Daniel Miquel, Pedro Coloma: AddNewHiScore and CompareScore
  * 0.01, 09-may-2018, Nacho: First version, almost empty skeleton
  */
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 class HiScoresScreen
 {
@@ -14,7 +18,7 @@ class HiScoresScreen
 
     public void Run()
     {
-        
+
         Font font18 = new Font("data/Joystix.ttf", 18);
         SdlHardware.ClearScreen();
 
@@ -22,12 +26,13 @@ class HiScoresScreen
             40, 10,
             0x22, 0xFF, 0x22,
             font18);
-        AddNewHiScore(50, "lolo");
-        AddNewHiScore(50, "Pepe");
-        AddNewHiScore(80, "Juan");
-        AddNewHiScore(70, "Lolo");
-        AddNewHiScore(30, "jojo");
-        
+        /*
+        AddNewHiScore(100, "Jose");
+        AddNewHiScore(250, "dfg");
+        AddNewHiScore(342, "asf");
+
+        ReadHiScoreFile();
+        */
         for (int i = 0; i < hiScores.Count; i++)
         {
             SdlHardware.WriteHiddenText(hiScores[i].GetName() + " "
@@ -36,8 +41,8 @@ class HiScoresScreen
                 0x22, 0xFF, 0x22,
                 font18);
         }
-        
-        
+
+
         SdlHardware.ShowHiddenScreen();
         do
         {
@@ -45,13 +50,37 @@ class HiScoresScreen
         }
         while (!SdlHardware.KeyPressed(SdlHardware.KEY_SPC));
     }
-    
+
+    /*
     public void AddNewHiScore(int points, string name)
     {
-        HiScore score = new HiScore(points, name);
-        hiScores.Add(score);
-        hiScores.Sort(CompareScore);
+        StreamWriter scores = File.AppendText("HiScore.dat");
+        scores.WriteLine(points + ":" + name);
+        scores.Close();
     }
+
+    public void ReadHiScoreFile()
+    {
+        StreamReader scores = new StreamReader("HiScore.dat");
+
+        string line;
+        string[] data;
+        do
+        {
+            line = scores.ReadLine();
+            if (line != null)
+            {
+                data = line.Split(':');
+                HiScore score = new HiScore(Convert.ToInt32(data[0]), data[1]);
+                hiScores.Add(score);
+            }
+        } while (line != null);
+        scores.Close();
+
+        hiScores.Sort(CompareScore);
+
+    }
+    */
 
     public int CompareScore(HiScore s1, HiScore s2)
     {
