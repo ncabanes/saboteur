@@ -4,8 +4,8 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
- * 0.05. 11-may-2018, Rebollo, Lopez:
- *       Added shuriken
+ * 0.06, 12-may-2018, Nacho: room can be switched
+ * 0.05. 11-may-2018, Rebollo, Lopez: Added shuriken
  * 0.04. 11-may-2018, Nacho: 
  *      Simple collisions with the dog
  *      InfoPanel is animated to display energy and time
@@ -118,9 +118,25 @@ class Game
     private void checkInput()
     {
         if (SdlHardware.KeyPressed(SdlHardware.KEY_RIGHT))
+        {
             player.MoveRight();
+            int nextRoom = complex.GetCurrentRoom().CheckIfNewRoom(player);
+            if (nextRoom != -1)
+            {
+                complex.GetCurrentRoom().LoadRoom(nextRoom);
+                player.MoveTo(0, player.GetY());
+            }
+        }
         if (SdlHardware.KeyPressed(SdlHardware.KEY_LEFT))
+        {
             player.MoveLeft();
+            int nextRoom = complex.GetCurrentRoom().CheckIfNewRoom(player);
+            if (nextRoom != -1)
+            {
+                complex.GetCurrentRoom().LoadRoom(nextRoom);
+                player.MoveTo(1024-player.GetWidth(), player.GetY());
+            }
+        }
         if (SdlHardware.KeyPressed(SdlHardware.KEY_SPC))
         {
             weapon = new Shuriken();
