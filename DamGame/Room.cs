@@ -3,7 +3,9 @@
  * 
  * Changes:
  * 
- * 0.07, 11-may-2018, Daniel Miquel, Luis Martin: Room with stairs. 
+ * 0.06, 12-may-2018, Nacho: room data was loaded in Draw, now in constructor
+ *          LoadRoom receives room number, instead of filename
+ * 0.05b, 11-may-2018, Daniel Miquel, Luis Martin: Room with stairs. 
  * 0.05, 11-may-2018, Santana, Saorin, Sabater: Save data info of close rooms from a file. 
  * 0.04. 11-may-2018, Nacho: Rooms with more detailed definition can be read from file
  * 0.03, 10-may-2018, Pestana, Saorin: Load map from a file. 
@@ -46,10 +48,12 @@ class Room
         door = new Image("data/imgRetro/tileWall3.png");
         tileStairLeft = new Image("data/imgRetro/tileStairLeft.png");
         tileStairRight = new Image("data/imgRetro/tileStairRight.png");
+        LoadRoom(65);  // Starting room
     }
 
-    private void LoadRoom(string levelFileName)
+    public void LoadRoom(int n)
     {
+        string levelFileName = "data/room" + n.ToString("000")+ ".dat";
         StreamReader input = new StreamReader(levelFileName);
         string line = "";
         int row = 0;
@@ -121,10 +125,6 @@ class Room
 
     public void Draw()
     {
-        // TO DO: Replace with tiles for the real map of the room
-        // SdlHardware.DrawHiddenImage(tmpBackground, 32, 0);
-        LoadRoom("data/room065.dat");
-        // TO DO: This part is not finished, as the array is still empty
         for (int i = 0; i < roomWidth; i++)
         {
             for (int j = 0; j < roomHeight; j++)
