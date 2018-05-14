@@ -2,10 +2,10 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
  * 0.03, 10-may-2018 Victor,Gonzalo:
  *     Displays the intro screen and menu screen.
  *     Lets the user choose the screen.
- * 
  * 0.01, 09-may-2018, Nacho: 
  *     First version, displays all screens in sequence
  */
@@ -34,22 +34,22 @@ class Saboteur
             switch (menu.GetChosenOption())
             {
                 case MenuScreen.MenuOption.Game:
-                    Game g = new Game();
+                    Game g = new Game(menu.RetroLook);
                     g.Run();
                     break;
 
                 case MenuScreen.MenuOption.Help:
-                    HelpScreen help = new HelpScreen();
+                    HelpScreen help = new HelpScreen(menu.RetroLook);
                     help.Run();
                     break;
 
                 case MenuScreen.MenuOption.Credits:
-                    CreditsScreen credits = new CreditsScreen();
+                    CreditsScreen credits = new CreditsScreen(menu.RetroLook);
                     credits.Run();
                     break;
 
                 case MenuScreen.MenuOption.Scores:
-                    HiScoresScreen hiScores = new HiScoresScreen();
+                    HiScoresScreen hiScores = new HiScoresScreen(menu.RetroLook);
                     hiScores.Run();
                     break;
             }

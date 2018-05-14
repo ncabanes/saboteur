@@ -2,7 +2,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
- * 
+ * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
  * 0.06, 12-may-2018, Nacho: room data was loaded in Draw, now in constructor
  *          LoadRoom receives room number, instead of filename
  * 0.05b, 11-may-2018, Daniel Miquel, Luis Martin: Room with stairs. 
@@ -36,18 +36,21 @@ class Room
     int upRoom;
     int bottomRoom;
 
-    public Room()
+    public Room(bool retroLook)
     {
         roomWidth = 33;
         roomHeight = 17;
-        tmpBackground = new Image("data/imgRetro/exampleRoom.png");
+        string folder = "imgRetro";
+        if (!retroLook)
+            folder = "imgUpdated";
+        tmpBackground = new Image("data/" + folder + "/exampleRoom.png");
         background = new char[roomWidth, roomHeight];
-        brick = new Image("data/imgRetro/tileWall1.png");
-        ground = new Image("data/imgRetro/tileFloor.png");
-        window = new Image("data/imgRetro/tileWall2.png");
-        door = new Image("data/imgRetro/tileWall3.png");
-        tileStairLeft = new Image("data/imgRetro/tileStairLeft.png");
-        tileStairRight = new Image("data/imgRetro/tileStairRight.png");
+        brick = new Image("data/" + folder + "/tileWall1.png");
+        ground = new Image("data/" + folder + "/tileFloor.png");
+        window = new Image("data/" + folder + "/tileWall2.png");
+        door = new Image("data/" + folder + "/tileWall3.png");
+        tileStairLeft = new Image("data/" + folder + "/tileStairLeft.png");
+        tileStairRight = new Image("data/" + folder + "/tileStairRight.png");
         LoadRoom(65);  // Starting room
     }
 

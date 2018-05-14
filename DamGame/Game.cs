@@ -4,6 +4,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
  * 0.06, 12-may-2018, Nacho: room can be switched
  * 0.05. 11-may-2018, Rebollo, Lopez: Added shuriken
  * 0.04. 11-may-2018, Nacho: 
@@ -35,7 +36,12 @@ class Game
     int numEnemies;
     Player player;
     Shuriken weapon;
+    bool retroLook;
 
+    public Game(bool retroLook)
+    {
+        this.retroLook = retroLook;
+    }
 
     public void Run()
     {
@@ -54,7 +60,7 @@ class Game
             enemies[i].SetSpeed(rnd.Next(1, 5) , 0);
         }
 
-        complex = new Complex();
+        complex = new Complex(retroLook);
         info = new InfoPanel();
         dog = new Dog();
         dog.MoveTo(400, 200);

@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
  * 0.06, 12-may-2018, Nacho: yText is reset; some code cleaning,
  *          names are displayed alphabetically: typos fixed
  * 0.05, 11-may-2018, Luis and Cesar: Half of the "Star wars" logic.
@@ -12,6 +13,24 @@
 
 class CreditsScreen
 {
+    Image background;
+    Font font18, font24;
+
+    public CreditsScreen(bool retroLook)
+    {
+        if (retroLook)
+        {
+            background = new Image("data/imgRetro/menuBackground.png");
+            font18 = new Font("data/Joystix.ttf", 18);
+            font24 = new Font("data/Joystix.ttf", 24);
+        }
+        else
+        {
+            background = new Image("data/imgUpdated/menuBackground.png");
+            font18 = new Font("data/VeraSansBold.ttf", 18);
+            font24 = new Font("data/VeraSansBold.ttf", 24);
+        }
+    }
     protected string[] names = { "Original game: Clive Townsend",
         " ", "  Remakers:",
         "Brandon Blasco",
@@ -42,8 +61,6 @@ class CreditsScreen
     protected bool nextName = false;
     public void Run()
     {
-        Font font24 = new Font("data/Joystix.ttf", 24);
-        Font font18 = new Font("data/Joystix.ttf", 18);
         /*
         Font font22 = new Font("data/Joystix.ttf", 22);
         Font font16 = new Font("data/Joystix.ttf", 16);
@@ -51,7 +68,6 @@ class CreditsScreen
         Font font28 = new Font("data/Joystix.ttf", 28);
         Font font14 = new Font("data/Joystix.ttf", 14);
         */
-        Image background = new Image("data/imgRetro/menuBackground.png");
 
         while (!finished)
         {

@@ -4,9 +4,11 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.07, 14-may-2018, Nacho:
+ *      Menu data as an array: added option to change graphics quality
+ *      (repetitive code to be fixed)
  * 0.03, 10-may-2018, Victor, Gonzalo:
  *      Menu screen fully functional
- * 
  * 0.02, 09-may-2018, Victor, Miguel, Gonzalo: 
  *      Attributes and method GetChosenOption() added, but not finished
  *      Background image
@@ -17,6 +19,7 @@ class MenuScreen
 {
     public enum MenuOption { Menu, Game, Help, Credits, Scores , Exit};
     private MenuOption chosenOption;
+    public bool RetroLook { get; set;  }
 
     public void Run()
     {
@@ -24,38 +27,26 @@ class MenuScreen
         Font font32 = new Font("data/Joystix.ttf", 32);
         Font font24 = new Font("data/Joystix.ttf", 24);
         Image background = new Image("data/imgRetro/menuBackground.png");
+        RetroLook = true;
+
         SdlHardware.ClearScreen();
         SdlHardware.DrawHiddenImage(background, 0, 0);
+
+        string[] options = {  "1. Start mission",
+            "2. Help", "3. Credits","4. Hi-Scores",
+            "5. Graphics: retro", "0. Quit" };
 
         SdlHardware.WriteHiddenText("Saboteur",
             500, 80,
             0xff, 0x00, 0x00,
             font32);
-
-        SdlHardware.WriteHiddenText("1. Start mission",
-            500, 140,
+        for (int i = 0; i < options.Length; i++)
+        {
+            SdlHardware.WriteHiddenText(options[i],
+            500, (short) (140+i*40),
             0xFF, 0xFA, 0x00,
             font24);
-
-        SdlHardware.WriteHiddenText("2. Help",
-            500, 180,
-            0xFF, 0xFA, 0x00,
-            font24);
-
-        SdlHardware.WriteHiddenText("3. Credits",
-            500, 220,
-            0xFF, 0xFA, 0x00,
-            font24);
-
-        SdlHardware.WriteHiddenText("4. Hi-Scores",
-            500, 260,
-            0xFF, 0xFA, 0x00,
-            font24);
-
-        SdlHardware.WriteHiddenText("5. Quit",
-            500, 300,
-            0xFF, 0xFA, 0x00,
-            font24);
+        }
 
         SdlHardware.ShowHiddenScreen();
 
@@ -80,6 +71,35 @@ class MenuScreen
                 chosenOption = MenuOption.Scores;
             }
             else if (SdlHardware.KeyPressed(SdlHardware.KEY_5))
+            {
+                if (RetroLook)
+                {
+                    options[4] = "5. Graphics: updated";
+                    RetroLook = false;
+                    //background = new Image("data/imgUpdated/menuBackground.png");
+                }
+                else
+                {
+                    options[4] = "5. Graphics: retro";
+                    RetroLook = true;
+                    //background = new Image("data/imgRetro/menuBackground.png");
+                }
+                SdlHardware.ClearScreen();
+                SdlHardware.DrawHiddenImage(background, 0, 0);
+                SdlHardware.WriteHiddenText("Saboteur",
+                    500, 80,
+                    0xff, 0x00, 0x00,
+                    font32);
+                for (int i = 0; i < options.Length; i++)
+                {
+                    SdlHardware.WriteHiddenText(options[i],
+                    500, (short)(140 + i * 40),
+                    0xFF, 0xFA, 0x00,
+                    font24);
+                }
+                SdlHardware.ShowHiddenScreen();
+            }
+            else if (SdlHardware.KeyPressed(SdlHardware.KEY_0))
             {
                 chosenOption = MenuOption.Exit;
             }

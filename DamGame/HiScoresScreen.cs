@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
  * 0.06, 12-may-2018, Nacho: 
  *      Error checking when writing and reading files
  *      New data are added to the data list
@@ -19,11 +20,25 @@ using System.IO;
 class HiScoresScreen
 {
     protected List<HiScore> hiScores = new List<HiScore>();
+    Image background;
+    Font font18;
+
+    public HiScoresScreen(bool retroLook)
+    {
+        if (retroLook)
+        {
+            background = new Image("data/imgRetro/menuBackground.png");
+            font18 = new Font("data/Joystix.ttf", 18);
+        }
+        else
+        {
+            background = new Image("data/imgUpdated/menuBackground.png");
+            font18 = new Font("data/VeraSansBold.ttf", 18);
+        }
+    }
 
     public void Run()
     {
-
-        Font font18 = new Font("data/Joystix.ttf", 18);
         SdlHardware.ClearScreen();
 
         SdlHardware.WriteHiddenText("Hi Scores...",

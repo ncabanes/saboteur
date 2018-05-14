@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
  * 0.03, 11-may-2018, Nacho: keypress to return instead of timed pause
  * 0.02, 10-may-2018, López, Rebollo: display help
  * 0.01, 09-may-2018, Nacho: First version, almost empty skeleton
@@ -11,12 +12,29 @@
 using System;
 class HelpScreen
 {
-    Image background = new Image("data/imgRetro/menuBackground.png");
+    Image background;
+    Font font18;
 
-    short x = 100;
-    short y = 100;
+    public HelpScreen(bool retroLook)
+    {
+        if (retroLook)
+        {
+            background = new Image("data/imgRetro/menuBackground.png");
+            font18 = new Font("data/Joystix.ttf", 18);
+        }
+        else
+        {
+            background = new Image("data/imgUpdated/menuBackground.png");
+            font18 = new Font("data/VeraSansBold.ttf", 18);
+        }
+    }
+    
+    public void Run()
+    {
+        short x = 100;
+        short y = 100;
 
-    string[] texts = { "Controls: "," ","-----------------"," ","UP - Jump/climb up",
+        string[] texts = { "Controls: "," ","-----------------"," ","UP - Jump/climb up",
         "DOWN - Duck/climb down", "LEFT - Walk left","RIGHT - walk right",
         "FIRE - Throw/pickup object", " ",
         "Standard Controls:"," ","-----------------"," ",
@@ -28,10 +46,6 @@ class HelpScreen
         " ",
         "Press space to return..."};
 
-
-    public void Run()
-    {
-        Font font18 = new Font("data/Joystix.ttf", 18);
         SdlHardware.ClearScreen();
         SdlHardware.DrawHiddenImage(background, 0, 0);
         
