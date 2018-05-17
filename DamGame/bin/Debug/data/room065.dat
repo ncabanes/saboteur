@@ -20,7 +20,7 @@ left=064
 right=066
 up=NOT
 down=NOT
-dogs=1=400,200
-enemies=2=200,200=500,200
+dogs=0
+enemies=0
 cameras=0
-items=1=stone,600,200
+items=0
