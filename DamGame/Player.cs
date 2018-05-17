@@ -3,6 +3,8 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.08, 17-may-2018, Nacho: 
+ *      Correct width and height (for the standard image)
  * 0.05, 11-may-2018,Marcos Cervantes, Jose Vilaplana, Jump
  * 0.03, 10-may-2018, Luis and Cesar, Loading the ImageSequence of the player.
  * 0.02, 09-may-2018, Luis and Cesar, corrections by Nacho:
@@ -27,8 +29,8 @@ class Player : Sprite
         
         x = 50;
         y = 200;
-        width = 64;
-        height = 180;
+        width = 128;
+        height = 160;
         xSpeed = 4;
         ySpeed = 4;
         jumpFrame = 1;

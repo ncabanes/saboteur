@@ -4,6 +4,9 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.08, 17-may-2018, Nacho: 
+ *      Collisions with the room are checked when moving right
+ *      Cheat mode to get full energy again (keys C+E)
  * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
  * 0.06, 12-may-2018, Nacho: room can be switched
  * 0.05. 11-may-2018, Rebollo, Lopez: Added shuriken
@@ -123,7 +126,13 @@ class Game
 
     private void checkInput()
     {
-        if (SdlHardware.KeyPressed(SdlHardware.KEY_RIGHT))
+        if (SdlHardware.KeyPressed(SdlHardware.KEY_RIGHT)
+            && complex.GetCurrentRoom().CanMoveTo(
+                player.GetX() + player.GetSpeedX(),
+                player.GetY(),
+                player.GetX() + player.GetSpeedX() + player.GetWidth(),
+                player.GetY() + player.GetHeight())
+                )
         {
             player.MoveRight();
             int nextRoom = complex.GetCurrentRoom().CheckIfNewRoom(player);
@@ -154,6 +163,10 @@ class Game
             player.Duck();
         if (SdlHardware.KeyPressed(SdlHardware.KEY_ESC))
             finished = true;
+        // Cheat 1: C+E to get full energy
+        if (SdlHardware.KeyPressed(SdlHardware.KEY_C)
+            && SdlHardware.KeyPressed(SdlHardware.KEY_E))
+            info.Energy = 100;
     }
 
     private void drawElements()

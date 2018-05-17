@@ -2,6 +2,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.08, 17-may-2018, Nacho: CanMoveTo implemented (bouncing boxes)
  * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
  * 0.06, 12-may-2018, Nacho: room data was loaded in Draw, now in constructor
  *          LoadRoom receives room number, instead of filename
@@ -162,6 +163,27 @@ class Room
 
     public bool CanMoveTo(int x1, int y1, int x2, int y2)
     {
+        // Let's assume only background (tile "g") cannot be crossed now
+        for (int i = 0; i < roomWidth; i++)
+        {
+            for (int j = 0; j < roomHeight; j++)
+            {
+                char tile = background[i, j];
+                if (tile == 'g')
+                {
+                    int x1t = i * 32;
+                    int y1t = j * 32;
+                    int x2t = x1t + 32;
+                    int y2t = y1t + 32;
+                    if ((x1t < x2) &&
+                        (x2t > x1) &&
+                        (y1t < y2) &&
+                        (y2t > y1) // Collision as bouncing boxes
+                        )
+                        return false;
+                }
+            }
+        }
         return true;
     }
 
