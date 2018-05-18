@@ -1,9 +1,9 @@
-﻿
-/// Game.cs - Game logic for Saboteur
+﻿/// Game.cs - Game logic for Saboteur
 
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.09b,18-may-2018, Nacho: Player can climb side stairs (to the right)
  * 0.09, 18-may-2018, Nacho: Player.Move receives the room, to check gravity
  * 0.08, 17-may-2018, Nacho: 
  *      Collisions with the room are checked when moving right
@@ -127,15 +127,32 @@ class Game
 
     private void checkInput()
     {
-        if (SdlHardware.KeyPressed(SdlHardware.KEY_RIGHT)
-            && complex.GetCurrentRoom().CanMoveTo(
-                player.GetX() + player.GetSpeedX(),
-                player.GetY(),
-                player.GetX() + player.GetSpeedX() + player.GetWidth(),
-                player.GetY() + player.GetHeight())
-                )
+        if (SdlHardware.KeyPressed(SdlHardware.KEY_RIGHT))
         {
-            player.MoveRight();
+            // TO DO: Simplify code and move to another function
+            if (complex.GetCurrentRoom().CanMoveTo(
+                    player.GetX() + player.GetSpeedX(),
+                    player.GetY(),
+                    player.GetX() + player.GetSpeedX() + player.GetWidth(),
+                    player.GetY() + player.GetHeight())
+                    )
+            {
+                player.MoveRight();
+            }
+            else
+            {
+                if (complex.GetCurrentRoom().CanMoveTo(
+                        player.GetX() + player.GetSpeedX(),
+                        player.GetY() - 32,
+                        player.GetX() + player.GetSpeedX() + player.GetWidth(),
+                        player.GetY() + player.GetHeight() - 32)
+                    )
+                {
+                    player.MoveTo(player.GetX(), player.GetY() - 32);
+                    player.MoveRight();
+                }
+            }
+           
             int nextRoom = complex.GetCurrentRoom().CheckIfNewRoom(player);
             if (nextRoom != -1)
             {
@@ -143,6 +160,7 @@ class Game
                 player.MoveTo(0, player.GetY());
             }
         }
+
         if (SdlHardware.KeyPressed(SdlHardware.KEY_LEFT))
         {
             player.MoveLeft();
