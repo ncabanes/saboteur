@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.09, 18-may-2018, Nacho: Added gravity
  * 0.08, 17-may-2018, Nacho: 
  *      Correct width and height (for the standard image)
  * 0.05, 11-may-2018,Marcos Cervantes, Jose Vilaplana, Jump
@@ -84,7 +85,7 @@ class Player : Sprite
         }
     }
 
-    public override void Move()
+    public void Move(Room r)
     {
         if (jumping)
         {
@@ -96,6 +97,11 @@ class Player : Sprite
                 ChangeDirection(RIGHT);
                 jumpFrame = 1;
             }
+        }
+        else // If not jumping, let's check gravity
+        {
+            if (r.CanMoveTo(x, y + 4, x + width, y + height + 4))
+                MoveTo(x, y + 4);
         }
     }
 

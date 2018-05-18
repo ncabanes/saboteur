@@ -4,6 +4,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.09, 18-may-2018, Nacho: Player.Move receives the room, to check gravity
  * 0.08, 17-may-2018, Nacho: 
  *      Collisions with the room are checked when moving right
  *      Cheat mode to get full energy again (keys C+E)
@@ -119,7 +120,7 @@ class Game
         dog.Move();
         enemies[0].Move();
         info.Animate();
-        player.Move();
+        player.Move(complex.GetCurrentRoom());
         if (weapon != null)
             weapon.Move();
     }

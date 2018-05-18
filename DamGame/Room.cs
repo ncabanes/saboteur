@@ -2,6 +2,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.09, 18-may-2018, Nacho: Fine tuned right and left margins for the player
  * 0.08, 17-may-2018, Nacho: CanMoveTo implemented (bouncing boxes)
  * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
  * 0.06, 12-may-2018, Nacho: room data was loaded in Draw, now in constructor
@@ -190,9 +191,9 @@ class Room
     /// Return the number of the next room if is accesible, if it is not return -1.
     public int CheckIfNewRoom(Player player)
     {
-        if (player.GetX() >= (roomWidth * 32) + (player.GetWidth() / 2))
+        if (player.GetX() >= roomWidth * 32 - player.GetWidth())
             return rightRoom;
-        else if (player.GetX() <= 0 - (player.GetWidth() / 2))
+        else if (player.GetX() <= 0)
             return leftRoom;
         else if (player.GetY() <= 0 - (player.GetHeight() / 2))
             return upRoom;
