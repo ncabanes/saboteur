@@ -2,6 +2,9 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.10, 21-may-2018, Nacho: 
+ *      try-catch for error handling in LoadRoom
+ *      The room can contain enemies and dogs
  * 0.09, 18-may-2018, Nacho: Fine tuned right and left margins for the player
  * 0.08, 17-may-2018, Nacho: CanMoveTo implemented (bouncing boxes)
  * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
@@ -17,7 +20,9 @@
  * 0.01, 09-may-2018, Nacho: First version, almost empty skeleton
  */
 
+using System.Collections.Generic;
 using System.IO;
+using System;
 
 /// Room - Represents one of the rooms that the user can visit
 class Room
@@ -30,6 +35,8 @@ class Room
     Image door;
     Image tileStairLeft;
     Image tileStairRight;
+    List<Enemy> enemies;
+    List<Dog> dogs;
     int roomWidth;
     int roomHeight;
     int currentRoom;
@@ -53,79 +60,119 @@ class Room
         door = new Image("data/" + folder + "/tileWall3.png");
         tileStairLeft = new Image("data/" + folder + "/tileStairLeft.png");
         tileStairRight = new Image("data/" + folder + "/tileStairRight.png");
-        LoadRoom(65);  // Starting room
+        Load(65);  // Starting room
+        enemies = new List<Enemy>();
+        dogs = new List<Dog>();
     }
 
-    public void LoadRoom(int n)
+    /// <summary>
+    /// Loads the data for a room from file 
+    /// </summary>
+    /// <param name="n">Number of room</param>
+    public void Load(int n)
     {
-        string levelFileName = "data/room" + n.ToString("000")+ ".dat";
-        StreamReader input = new StreamReader(levelFileName);
-        string line = "";
-        int row = 0;
-        for (int l = 0; l < roomHeight; l++)
+        try
         {
-            line = input.ReadLine();
-            if (line != null)
+            string levelFileName = "data/room" + n.ToString("000") + ".dat";
+            StreamReader input = new StreamReader(levelFileName);
+            string line = "";
+            int row = 0;
+            for (int l = 0; l < roomHeight; l++)
             {
-                for (int col = 0; col < line.Length; col++)
+                line = input.ReadLine();
+                if (line != null)
                 {
-                    switch (line[col])
+                    for (int col = 0; col < line.Length; col++)
                     {
-                        case 'b':
-                            background[col, row] = 'b';
-                            break;
-                        case 'g':
-                            background[col, row] = 'g';
-                            break;
-                        case 'w':
-                            background[col, row] = 'w';
-                            break;
-                        case 'd':
-                            background[col, row] = 'd';
-                            break;
-                        case '<':
-                            background[col, row] = '<';
-                            break;
-                        case '>':
-                            background[col, row] = '>';
-                            break;
-                        default:
-                            break;
+                        switch (line[col])
+                        {
+                            case 'b':
+                                background[col, row] = 'b';
+                                break;
+                            case 'g':
+                                background[col, row] = 'g';
+                                break;
+                            case 'w':
+                                background[col, row] = 'w';
+                                break;
+                            case 'd':
+                                background[col, row] = 'd';
+                                break;
+                            case '<':
+                                background[col, row] = '<';
+                                break;
+                            case '>':
+                                background[col, row] = '>';
+                                break;
+                            default:
+                                break;
+                        }
                     }
+                    row++;
                 }
-                row++;
             }
+            // Read and parse extra room details
+
+            string roomNumber = input.ReadLine().Split('=')[1];
+            currentRoom = int.Parse(roomNumber);
+
+            roomNumber = input.ReadLine().Split('=')[1];
+            if (roomNumber.ToUpper() != "NOT")
+                leftRoom = int.Parse(roomNumber);
+            else
+                leftRoom = -1;
+
+            roomNumber = input.ReadLine().Split('=')[1];
+            if (roomNumber.ToUpper() != "NOT")
+                rightRoom = int.Parse(roomNumber);
+            else
+                rightRoom = -1;
+
+            roomNumber = input.ReadLine().Split('=')[1];
+            if (roomNumber.ToUpper() != "NOT")
+                upRoom = int.Parse(roomNumber);
+            else
+                upRoom = -1;
+
+            roomNumber = input.ReadLine().Split('=')[1];
+            if (roomNumber.ToUpper() != "NOT")
+                bottomRoom = int.Parse(roomNumber);
+            else
+                bottomRoom = -1;
+
+            dogs = new List<Dog>();
+            string[] dogDetails = input.ReadLine().Split('=');
+            int numDogs = Convert.ToInt32(dogDetails[1]);
+            for (int i = 0; i < numDogs; i++)
+            {
+                Dog d = new Dog();
+                string[] posDetails = dogDetails[2 + i].Split(',');
+                int x = Convert.ToInt32(posDetails[0]);
+                int y = Convert.ToInt32(posDetails[1]);
+                dogs.Add(d);
+                d.MoveTo(x, y);
+            }
+
+            enemies = new List<Enemy>();
+            string[] enemiesDetails = input.ReadLine().Split('=');
+            int numEnemies = Convert.ToInt32(enemiesDetails[1]);
+            for (int i = 0; i < numEnemies; i++)
+            {
+                Enemy e = new Enemy();
+                string[] posDetails = enemiesDetails[2 + i].Split(',');
+                int x = Convert.ToInt32(posDetails[0]);
+                int y = Convert.ToInt32(posDetails[1]);
+                enemies.Add(e);
+                e.MoveTo(x, y);
+            }
+
+            input.Close();
         }
-        // Read and parse extra room details
-
-        string roomNumber = input.ReadLine().Split('=')[1];
-        currentRoom = int.Parse(roomNumber);
-
-        roomNumber = input.ReadLine().Split('=')[1];
-        if (roomNumber.ToUpper() != "NOT")
-            leftRoom = int.Parse(roomNumber);
-        else
-            leftRoom = -1;
-
-        roomNumber = input.ReadLine().Split('=')[1];
-        if (roomNumber.ToUpper() != "NOT")
-            rightRoom = int.Parse(roomNumber);
-        else
-            rightRoom = -1;
-
-        roomNumber = input.ReadLine().Split('=')[1];
-        if (roomNumber.ToUpper() != "NOT")
-            upRoom = int.Parse(roomNumber);
-        else
-            upRoom = -1;
-
-        roomNumber = input.ReadLine().Split('=')[1];
-        if (roomNumber.ToUpper() != "NOT")
-            bottomRoom = int.Parse(roomNumber);
-        else
-            bottomRoom = -1;
-
-        input.Close();      
+        catch (Exception e)
+        {
+            File.WriteAllLines("roomError.log",
+                new string[] { "Error loading room: ", e.Message });
+        }
     }
 
     public void Draw()
@@ -202,5 +249,15 @@ class Room
         else
         return -1;
         // TODO: go up or down checking stairs.
+    }
+
+    public List<Dog> GetDogs()
+    {
+        return dogs;
+    }
+
+    public List<Enemy> GetEnemies()
+    {
+        return enemies;
     }
 }

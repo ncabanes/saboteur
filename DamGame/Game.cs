@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.10, 21-may-2018, Nacho: The room can contain enemies and dogs
  * 0.09b,18-may-2018, Nacho: Player can climb side stairs (to the right)
  * 0.09, 18-may-2018, Nacho: Player.Move receives the room, to check gravity
  * 0.08, 17-may-2018, Nacho: 
@@ -33,10 +34,10 @@ class Game
 {
     Complex complex;
     InfoPanel info;
-    Dog dog;
+    // Dog dog;
     Font font18;
     bool finished;
-    Enemy[] enemies;
+    // Enemy[] enemies;
     int numEnemies;
     Player player;
     Shuriken weapon;
@@ -54,6 +55,7 @@ class Game
         player.MoveTo(50, 120);
 
         Random rnd = new Random();
+        /*
         numEnemies = 2;
         enemies = new Enemy[numEnemies];
         for (int i = 0; i < numEnemies; i++)
@@ -63,11 +65,13 @@ class Game
                 rnd.Next(50, 400));
             enemies[i].SetSpeed(rnd.Next(1, 5) , 0);
         }
-
+        */
         complex = new Complex(retroLook);
         info = new InfoPanel();
+        /*
         dog = new Dog();
         dog.MoveTo(400, 200);
+        */
 
         finished = false;
         weapon = null;
@@ -102,8 +106,9 @@ class Game
     private void checkCollisions()
     {
         //TO DO: Complete with elements in a room
-        if (player.CollisionsWith(dog))
-            info.Energy--;
+        foreach (Dog d in complex.GetCurrentRoom().GetDogs())
+            if (player.CollisionsWith(d))
+                info.Energy--;
 
         if ((info.Energy == 0) || (info.Time == 0))
             finished = true;
@@ -117,8 +122,12 @@ class Game
     private void moveElements()
     {
         // TO DO: Animate all elements in a Room
-        dog.Move();
-        enemies[0].Move();
+        foreach (Dog d in complex.GetCurrentRoom().GetDogs())
+            d.Move();
+
+        foreach (Enemy e in complex.GetCurrentRoom().GetEnemies())
+            e.Move();
+
         info.Animate();
         player.Move(complex.GetCurrentRoom());
         if (weapon != null)
@@ -156,7 +165,7 @@ class Game
             int nextRoom = complex.GetCurrentRoom().CheckIfNewRoom(player);
             if (nextRoom != -1)
             {
-                complex.GetCurrentRoom().LoadRoom(nextRoom);
+                complex.GetCurrentRoom().Load(nextRoom);
                 player.MoveTo(0, player.GetY());
             }
         }
@@ -167,7 +176,7 @@ class Game
             int nextRoom = complex.GetCurrentRoom().CheckIfNewRoom(player);
             if (nextRoom != -1)
             {
-                complex.GetCurrentRoom().LoadRoom(nextRoom);
+                complex.GetCurrentRoom().Load(nextRoom);
                 player.MoveTo(1024-player.GetWidth(), player.GetY());
             }
         }
@@ -194,12 +203,16 @@ class Game
 
         complex.GetCurrentRoom().Draw();
         info.Draw();
-        dog.DrawOnHiddenScreen();
+        foreach (Dog d in complex.GetCurrentRoom().GetDogs())
+            d.DrawOnHiddenScreen();
+        foreach (Enemy e in complex.GetCurrentRoom().GetEnemies())
+            e.DrawOnHiddenScreen();
+        //dog.DrawOnHiddenScreen();
         player.DrawOnHiddenScreen();
         if(weapon != null)
             weapon.DrawOnHiddenScreen();
-        for (int i = 0; i < numEnemies; i++)
-            enemies[i].DrawOnHiddenScreen();
+        //for (int i = 0; i < numEnemies; i++)
+        //    enemies[i].DrawOnHiddenScreen();
         SdlHardware.ShowHiddenScreen();
     }
 }
