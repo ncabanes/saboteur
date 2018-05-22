@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.11, 22-may-2018, Nacho: Player movements checks moved to class Player
  * 0.10, 21-may-2018, Nacho: The room can contain enemies and dogs
  * 0.09b,18-may-2018, Nacho: Player can climb side stairs (to the right)
  * 0.09, 18-may-2018, Nacho: Player.Move receives the room, to check gravity
@@ -138,47 +139,12 @@ class Game
     {
         if (SdlHardware.KeyPressed(SdlHardware.KEY_RIGHT))
         {
-            // TO DO: Simplify code and move to another function
-            if (complex.GetCurrentRoom().CanMoveTo(
-                    player.GetX() + player.GetSpeedX(),
-                    player.GetY(),
-                    player.GetX() + player.GetSpeedX() + player.GetWidth(),
-                    player.GetY() + player.GetHeight())
-                    )
-            {
-                player.MoveRight();
-            }
-            else
-            {
-                if (complex.GetCurrentRoom().CanMoveTo(
-                        player.GetX() + player.GetSpeedX(),
-                        player.GetY() - 32,
-                        player.GetX() + player.GetSpeedX() + player.GetWidth(),
-                        player.GetY() + player.GetHeight() - 32)
-                    )
-                {
-                    player.MoveTo(player.GetX(), player.GetY() - 32);
-                    player.MoveRight();
-                }
-            }
-           
-            int nextRoom = complex.GetCurrentRoom().CheckIfNewRoom(player);
-            if (nextRoom != -1)
-            {
-                complex.GetCurrentRoom().Load(nextRoom);
-                player.MoveTo(0, player.GetY());
-            }
+            player.TryToMoveRight(complex.GetCurrentRoom());
         }
 
         if (SdlHardware.KeyPressed(SdlHardware.KEY_LEFT))
         {
-            player.MoveLeft();
-            int nextRoom = complex.GetCurrentRoom().CheckIfNewRoom(player);
-            if (nextRoom != -1)
-            {
-                complex.GetCurrentRoom().Load(nextRoom);
-                player.MoveTo(1024-player.GetWidth(), player.GetY());
-            }
+            player.TryToMoveLeft(complex.GetCurrentRoom());
         }
         if (SdlHardware.KeyPressed(SdlHardware.KEY_SPC))
         {

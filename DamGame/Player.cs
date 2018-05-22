@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.11, 22-may-2018, Nacho: Added TryToMoveLeft, TryToMoveRight
  * 0.09, 18-may-2018, Nacho: Added gravity
  * 0.08, 17-may-2018, Nacho: 
  *      Correct width and height (for the standard image)
@@ -111,4 +112,56 @@ class Player : Sprite
         ChangeDirection(DOWN);
     }
 
+
+    public void TryToMoveRight(Room r)
+    {
+        // If we can move right, let's do it
+        if (r.CanMoveTo(x + xSpeed, y, x + xSpeed + width,y + height))
+        {
+            MoveRight();
+        }
+        else
+        {
+            // If there is a side stair to climb, let's do it
+            if (r.CanMoveTo(x + xSpeed, y - 32, 
+                    x + xSpeed + width, y + height - 32))
+            {
+                y -= 32;
+                MoveRight();
+            }
+        }
+
+        int nextRoom = r.CheckIfNewRoom(this);
+        if (nextRoom != -1)
+        {
+            r.Load(nextRoom);
+            MoveTo(0, y);
+        }
+    }
+
+    public void TryToMoveLeft(Room r)
+    {
+        // If we can move left, let's do it
+        if (r.CanMoveTo(x - xSpeed, y, x - xSpeed + width, y + height))
+        {
+            MoveLeft();
+        }
+        else
+        {
+            // If there is a side stair to climb, let's do it
+            if (r.CanMoveTo(x - xSpeed, y - 32,
+                    x - xSpeed + width, y + height - 32))
+            {
+                y -= 32;
+                MoveLeft();
+            }
+        }
+
+        int nextRoom = r.CheckIfNewRoom(this);
+        if (nextRoom != -1)
+        {
+            r.Load(nextRoom);
+            MoveTo(1024-width, y);
+        }
+    }
 }
