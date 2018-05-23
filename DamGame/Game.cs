@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.12, 23-may-2018, Nacho: Moving upstairs (vertical)
  * 0.11, 22-may-2018, Nacho: Player movements checks moved to class Player
  * 0.10, 21-may-2018, Nacho: The room can contain enemies and dogs
  * 0.09b,18-may-2018, Nacho: Player can climb side stairs (to the right)
@@ -152,9 +153,14 @@ class Game
             weapon.MoveTo(player.GetX() + 40, player.GetY() + 40);
         }
         if (SdlHardware.KeyPressed(SdlHardware.KEY_UP))
-            player.Jump();
+        {
+            player.TryToMoveUp(complex.GetCurrentRoom());
+        }
+
         if (SdlHardware.KeyPressed(SdlHardware.KEY_DOWN))
-            player.Duck();
+        {
+            player.TryToMoveDown(complex.GetCurrentRoom());
+        }
         if (SdlHardware.KeyPressed(SdlHardware.KEY_ESC))
             finished = true;
         // Cheat 1: C+E to get full energy

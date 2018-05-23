@@ -2,6 +2,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.12, 23-may-2018, Nacho: IsThereVerticalStair implemented (bouncing boxes)
  * 0.10, 21-may-2018, Nacho: 
  *      try-catch for error handling in LoadRoom
  *      The room can contain enemies and dogs
@@ -233,6 +234,32 @@ class Room
             }
         }
         return true;
+    }
+
+    public bool IsThereVerticalStair(int x1, int y1, int x2, int y2)
+    {
+        // Let's assume only background (tile "g") cannot be crossed now
+        for (int i = 0; i < roomWidth; i++)
+        {
+            for (int j = 0; j < roomHeight; j++)
+            {
+                char tile = background[i, j];
+                if ((tile == '<') || (tile == '>'))
+                {
+                    int x1t = i * 32;
+                    int y1t = j * 32;
+                    int x2t = x1t + 32;
+                    int y2t = y1t + 32;
+                    if ((x1t < x2) &&
+                        (x2t > x1) &&
+                        (y1t < y2) &&
+                        (y2t > y1) // Collision as bouncing boxes
+                        )
+                        return true;
+                }
+            }
+        }
+        return false;
     }
 
     /// Return the number of the next room if is accesible, if it is not return -1.

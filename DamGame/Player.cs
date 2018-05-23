@@ -3,6 +3,8 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.12, 23-may-2018, Nacho: 
+ *      Added TryToMoveUp, TryToMoveDown, climbing sequence & control boolean
  * 0.11, 22-may-2018, Nacho: Added TryToMoveLeft, TryToMoveRight
  * 0.09, 18-may-2018, Nacho: Added gravity
  * 0.08, 17-may-2018, Nacho: 
@@ -18,7 +20,7 @@ class Player : Sprite
 {
 
     int jumpFrame;
-    protected bool jumping;
+    protected bool jumping, climbing;
    /* string[] rightJump = { "data/imgRetro/playerJump1r.png",
                 "data/imgRetro/playerJump2r.png",};
     string[] leftJump = {"data/imgRetro/playerJump1l.png",
@@ -37,6 +39,7 @@ class Player : Sprite
         ySpeed = 4;
         jumpFrame = 1;
         jumping = false;
+        climbing = false;
         LoadSequence(RIGHT,
             new string[] { "data/imgRetro/playerWalking1r.png",
                 "data/imgRetro/playerWalking2r.png",
@@ -48,6 +51,11 @@ class Player : Sprite
                 "data/imgRetro/playerWalking3l.png"});
 
         LoadSequence(UP,
+            new string[] { "data/imgRetro/playerClimb1.png",
+                "data/imgRetro/playerClimb2.png",
+            });
+
+        LoadSequence(JUMPING,
             new string[] { "data/imgRetro/playerJump1l.png",
                 "data/imgRetro/playerJump2l.png",
                 "data/imgRetro/playerJump1r.png",
@@ -64,15 +72,34 @@ class Player : Sprite
 
     public void MoveRight()
     {
-        x += xSpeed;
-        ChangeDirection(RIGHT);
-        NextFrame();
+        if (!jumping)
+        {
+            climbing = false;
+            height = 160;
+            x += xSpeed;
+            ChangeDirection(RIGHT);
+            NextFrame();
+        }
     }
 
     public void MoveLeft()
     {
-        x -= xSpeed;
-        ChangeDirection(LEFT);
+        if (!jumping)
+        {
+            climbing = false;
+            height = 160;
+            x -= xSpeed;
+            ChangeDirection(LEFT);
+            NextFrame();
+        }
+    }
+
+    public void MoveUp()
+    {
+        y -= (244 - height);
+        height = 244;
+        y -= ySpeed;
+        ChangeDirection(UP);
         NextFrame();
     }
 
@@ -80,7 +107,7 @@ class Player : Sprite
     {
         if (!jumping)
         {
-            ChangeDirection(UP);
+            ChangeDirection(JUMPING);
             y -= 50;
             jumping = true;
         }
@@ -99,7 +126,8 @@ class Player : Sprite
                 jumpFrame = 1;
             }
         }
-        else // If not jumping, let's check gravity
+        // If not jumping, let's check gravity
+        else if (!climbing)
         {
             if (r.CanMoveTo(x, y + 4, x + width, y + height + 4))
                 MoveTo(x, y + 4);
@@ -162,6 +190,55 @@ class Player : Sprite
         {
             r.Load(nextRoom);
             MoveTo(1024-width, y);
+        }
+    }
+
+    public void TryToMoveUp(Room r)
+    {
+        // If there is a stair upwards, let's climb it
+        if (r.IsThereVerticalStair(x, y - ySpeed, x + width, y + height - ySpeed))
+        {
+            climbing = true;
+            MoveUp();
+        }
+        else
+        {
+            Jump();
+        }
+
+        /*
+        int nextRoom = r.CheckIfNewRoom(this);
+        if (nextRoom != -1)
+        {
+            r.Load(nextRoom);
+            MoveTo(1024 - width, y);
+        }
+        */
+    }
+
+    public void TryToMoveDown(Room r)
+    {
+        // If we can move left, let's do it
+        if (r.CanMoveTo(x - xSpeed, y, x - xSpeed + width, y + height))
+        {
+            MoveLeft();
+        }
+        else
+        {
+            // If there is a side stair to climb, let's do it
+            if (r.CanMoveTo(x - xSpeed, y - 32,
+                    x - xSpeed + width, y + height - 32))
+            {
+                y -= 32;
+                MoveLeft();
+            }
+        }
+
+        int nextRoom = r.CheckIfNewRoom(this);
+        if (nextRoom != -1)
+        {
+            r.Load(nextRoom);
+            MoveTo(1024 - width, y);
         }
     }
 }
