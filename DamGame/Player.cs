@@ -3,6 +3,8 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.13, 24-may-2018, Nacho: Player can move upstairs and downstairs,
+ *      even to different rooms (remaining: collisions on end of stairs) 
  * 0.12, 23-may-2018, Nacho: 
  *      Added TryToMoveUp, TryToMoveDown, climbing sequence & control boolean
  * 0.11, 22-may-2018, Nacho: Added TryToMoveLeft, TryToMoveRight
@@ -20,6 +22,7 @@ class Player : Sprite
 {
 
     int jumpFrame;
+    int standardHeight;
     protected bool jumping, climbing;
    /* string[] rightJump = { "data/imgRetro/playerJump1r.png",
                 "data/imgRetro/playerJump2r.png",};
@@ -35,6 +38,7 @@ class Player : Sprite
         y = 200;
         width = 128;
         height = 160;
+        standardHeight = 160; // used when trying to leave a vertical stair
         xSpeed = 4;
         ySpeed = 4;
         jumpFrame = 1;
@@ -103,12 +107,21 @@ class Player : Sprite
         NextFrame();
     }
 
+    public void MoveDown()
+    {
+        height = 244;
+        y += ySpeed;
+        ChangeDirection(UP);
+        NextFrame();
+    }
+
     public void Jump()
     {
         if (!jumping)
         {
             ChangeDirection(JUMPING);
             y -= 50;
+            height = 180;
             jumping = true;
         }
     }
@@ -126,7 +139,7 @@ class Player : Sprite
                 jumpFrame = 1;
             }
         }
-        // If not jumping, let's check gravity
+        // If not jumping nor climbing, let's check gravity
         else if (!climbing)
         {
             if (r.CanMoveTo(x, y + 4, x + width, y + height + 4))
@@ -144,7 +157,7 @@ class Player : Sprite
     public void TryToMoveRight(Room r)
     {
         // If we can move right, let's do it
-        if (r.CanMoveTo(x + xSpeed, y, x + xSpeed + width,y + height))
+        if (r.CanMoveTo(x + xSpeed, y, x + xSpeed + width,y + standardHeight))
         {
             MoveRight();
         }
@@ -170,7 +183,7 @@ class Player : Sprite
     public void TryToMoveLeft(Room r)
     {
         // If we can move left, let's do it
-        if (r.CanMoveTo(x - xSpeed, y, x - xSpeed + width, y + height))
+        if (r.CanMoveTo(x - xSpeed, y, x - xSpeed + width, y + standardHeight))
         {
             MoveLeft();
         }
@@ -198,47 +211,44 @@ class Player : Sprite
         // If there is a stair upwards, let's climb it
         if (r.IsThereVerticalStair(x, y - ySpeed, x + width, y + height - ySpeed))
         {
+            // TO DO: Check if there is ground over the stair
             climbing = true;
             MoveUp();
         }
         else
         {
+            climbing = false;
             Jump();
         }
 
-        /*
         int nextRoom = r.CheckIfNewRoom(this);
         if (nextRoom != -1)
         {
             r.Load(nextRoom);
-            MoveTo(1024 - width, y);
+            MoveTo(x, 17*32-height);
         }
-        */
     }
 
     public void TryToMoveDown(Room r)
     {
-        // If we can move left, let's do it
-        if (r.CanMoveTo(x - xSpeed, y, x - xSpeed + width, y + height))
+        // If there is a stair downwards, let's use it
+        if (r.IsThereVerticalStair(x, y + ySpeed, x + width, y + height + ySpeed))
         {
-            MoveLeft();
+            // TO DO: Check if there is ground under the stair
+            climbing = true;
+            MoveDown();
         }
         else
         {
-            // If there is a side stair to climb, let's do it
-            if (r.CanMoveTo(x - xSpeed, y - 32,
-                    x - xSpeed + width, y + height - 32))
-            {
-                y -= 32;
-                MoveLeft();
-            }
+            climbing = false;
+            Duck();
         }
 
         int nextRoom = r.CheckIfNewRoom(this);
         if (nextRoom != -1)
         {
             r.Load(nextRoom);
-            MoveTo(1024 - width, y);
+            MoveTo(x, 0);
         }
     }
 }

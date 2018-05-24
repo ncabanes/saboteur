@@ -2,6 +2,8 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.13, 24-may-2018, Nacho: Player can move upstairs and downstairs,
+ *      even to different rooms (remaining: collisions on end of stairs) 
  * 0.12, 23-may-2018, Nacho: IsThereVerticalStair implemented (bouncing boxes)
  * 0.10, 21-may-2018, Nacho: 
  *      try-catch for error handling in LoadRoom
@@ -238,7 +240,7 @@ class Room
 
     public bool IsThereVerticalStair(int x1, int y1, int x2, int y2)
     {
-        // Let's assume only background (tile "g") cannot be crossed now
+        // "<" and ">" are the symbols for the stairs
         for (int i = 0; i < roomWidth; i++)
         {
             for (int j = 0; j < roomHeight; j++)
@@ -267,15 +269,14 @@ class Room
     {
         if (player.GetX() >= roomWidth * 32 - player.GetWidth())
             return rightRoom;
-        else if (player.GetX() <= 0)
+        else if (player.GetX() < 0)
             return leftRoom;
-        else if (player.GetY() <= 0 - (player.GetHeight() / 2))
+        else if (player.GetY() <= 20)
             return upRoom;
-        else if(player.GetY() >= (roomHeight * 17) + (player.GetHeight() / 2))
+        else if(player.GetY() >= roomHeight * 32 - player.GetHeight())
             return bottomRoom;
         else
-        return -1;
-        // TODO: go up or down checking stairs.
+            return -1;
     }
 
     public List<Dog> GetDogs()
