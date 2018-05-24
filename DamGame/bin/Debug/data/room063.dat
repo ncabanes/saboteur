@@ -5,7 +5,7 @@ wwwwwggwwwwwwwwwwwwwwwwwwbwwwwwww
 wwwwwggwwwwwwwwwwwwwwwwwwbwwwwwww
 wwwwwggwwwwwwwwwwwwwwwwwwbwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwwwwbwwwwwww
-ggggggggggggggggggggggggggggggggg
+gggggggggg<>ggggggggggggggggggggg
 gggggggwww<>wwwwwwwwwwwwwwwwwwwww
 gggggggwww<>wwwwwwwwwwwwwwwwwwwww
 gggggggwww<>wwwwwwwwwwwwwwwwwwwww
@@ -20,7 +20,7 @@ left=062
 right=064
 up=NOT
 down=NOT
-dogs=1=400,200
+dogs=1=400,150
 enemies=0
 cameras=0
 items=1=stone,600,200
