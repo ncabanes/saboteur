@@ -20,6 +20,8 @@ class ThrowableItem : Sprite
     public override void Move()
     {
         x += xSpeed;
+        if ((x > 1024) || (x < 0))
+            visible = false;
     }
 }
 

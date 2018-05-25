@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.14, 25-may-2018, Nacho: Only one shuriken can be thrown at a time
  * 0.12, 23-may-2018, Nacho: Moving upstairs (vertical)
  * 0.11, 22-may-2018, Nacho: Player movements checks moved to class Player
  * 0.10, 21-may-2018, Nacho: The room can contain enemies and dogs
@@ -76,7 +77,8 @@ class Game
         */
 
         finished = false;
-        weapon = null;
+        weapon = new Shuriken();
+        weapon.Hide();
 
         // Game Loop
         MainLoop();
@@ -132,7 +134,7 @@ class Game
 
         info.Animate();
         player.Move(complex.GetCurrentRoom());
-        if (weapon != null)
+        if (weapon.IsVisible())
             weapon.Move();
     }
 
@@ -149,8 +151,11 @@ class Game
         }
         if (SdlHardware.KeyPressed(SdlHardware.KEY_SPC))
         {
-            weapon = new Shuriken();
-            weapon.MoveTo(player.GetX() + 40, player.GetY() + 40);
+            if (!weapon.IsVisible())
+            {
+                weapon.Show();
+                weapon.MoveTo(player.GetX() + 40, player.GetY() + 40);
+            }
         }
         if (SdlHardware.KeyPressed(SdlHardware.KEY_UP))
         {
@@ -181,7 +186,7 @@ class Game
             e.DrawOnHiddenScreen();
         //dog.DrawOnHiddenScreen();
         player.DrawOnHiddenScreen();
-        if(weapon != null)
+        if(weapon.IsVisible())
             weapon.DrawOnHiddenScreen();
         //for (int i = 0; i < numEnemies; i++)
         //    enemies[i].DrawOnHiddenScreen();
