@@ -3,6 +3,8 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.14, 25-may-2018, Nacho: Ducking in the right position; 
+ *      magic numbers in Player removed
  * 0.13, 24-may-2018, Nacho: Player can move upstairs and downstairs,
  *      even to different rooms (remaining: collisions on end of stairs) 
  * 0.12, 23-may-2018, Nacho: 
@@ -23,7 +25,15 @@ class Player : Sprite
 
     int jumpFrame;
     int standardHeight;
-    protected bool jumping, climbing;
+    protected bool jumping, climbing, ducking;
+    protected int gravitySpeed = 4;
+    protected int heightOfDuckImage = 100,
+        heightOfWalkingImage = 160,
+        heightOfClimbingImage = 244,
+        jumpSize = 50
+        ;
+    protected int framesInJump = 40;
+
    /* string[] rightJump = { "data/imgRetro/playerJump1r.png",
                 "data/imgRetro/playerJump2r.png",};
     string[] leftJump = {"data/imgRetro/playerJump1l.png",
@@ -37,13 +47,14 @@ class Player : Sprite
         x = 50;
         y = 200;
         width = 128;
-        height = 160;
-        standardHeight = 160; // used when trying to leave a vertical stair
+        height = heightOfWalkingImage;
+        standardHeight = heightOfWalkingImage; // used when trying to leave a vertical stair
         xSpeed = 4;
         ySpeed = 4;
         jumpFrame = 1;
         jumping = false;
         climbing = false;
+        ducking = false;
         LoadSequence(RIGHT,
             new string[] { "data/imgRetro/playerWalking1r.png",
                 "data/imgRetro/playerWalking2r.png",
@@ -79,7 +90,12 @@ class Player : Sprite
         if (!jumping)
         {
             climbing = false;
-            height = 160;
+            if (ducking)
+            {
+                ducking = false;
+                y -= (heightOfWalkingImage - heightOfDuckImage);
+            }
+            height = heightOfWalkingImage;
             x += xSpeed;
             ChangeDirection(RIGHT);
             NextFrame();
@@ -91,7 +107,12 @@ class Player : Sprite
         if (!jumping)
         {
             climbing = false;
-            height = 160;
+            if (ducking)
+            {
+                ducking = false;
+                y -= (heightOfWalkingImage - heightOfDuckImage);
+            }
+            height = heightOfWalkingImage;
             x -= xSpeed;
             ChangeDirection(LEFT);
             NextFrame();
@@ -100,8 +121,8 @@ class Player : Sprite
 
     public void MoveUp()
     {
-        y -= (244 - height);
-        height = 244;
+        y -= (heightOfClimbingImage - height);
+        height = heightOfClimbingImage;
         y -= ySpeed;
         ChangeDirection(UP);
         NextFrame();
@@ -109,7 +130,7 @@ class Player : Sprite
 
     public void MoveDown()
     {
-        height = 244;
+        height = heightOfClimbingImage;
         y += ySpeed;
         ChangeDirection(UP);
         NextFrame();
@@ -120,8 +141,8 @@ class Player : Sprite
         if (!jumping)
         {
             ChangeDirection(JUMPING);
-            y -= 50;
-            height = 180;
+            y -= (heightOfClimbingImage - heightOfWalkingImage);
+            height = heightOfWalkingImage;
             jumping = true;
         }
     }
@@ -131,10 +152,10 @@ class Player : Sprite
         if (jumping)
         {
             jumpFrame++;
-            if (jumpFrame > 40)
+            if (jumpFrame > framesInJump)
             {
                 jumping = false;
-                y += 50;
+                y += jumpSize;
                 ChangeDirection(RIGHT);
                 jumpFrame = 1;
             }
@@ -142,14 +163,21 @@ class Player : Sprite
         // If not jumping nor climbing, let's check gravity
         else if (!climbing)
         {
-            if (r.CanMoveTo(x, y + 4, x + width, y + height + 4))
-                MoveTo(x, y + 4);
+            if (r.CanMoveTo(x, y + gravitySpeed, 
+                    x + width, y + height + gravitySpeed))
+                MoveTo(x, y + gravitySpeed);
         }
     }
 
 
     public void Duck()
     {
+        if (ducking || climbing || jumping)
+            return;
+
+        ducking = true;
+        y += (heightOfWalkingImage - heightOfDuckImage);
+        height = heightOfDuckImage;
         ChangeDirection(DOWN);
     }
 
