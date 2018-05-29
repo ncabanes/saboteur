@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.15, 29-may-2018, Nacho: Uses Room.CanMoveEnemyTo(x1, y1, x2, y2)
  * 0.04. 11-may-2018, Nacho: Uses "SetGameUpdatesPerFrame" from Sprite
  * 0.03. 10-may-2018, López, Rebollo: Implemented change of direction
  * 0.02. 09-may-2018, López, Rebollo: Implemented movement and sprites
@@ -33,12 +34,13 @@ class Dog : Sprite
         SetGameUpdatesPerFrame(10);
     }
 
-    public override void Move()
+    public void Move(Room r)
     {
+        // @@@@@@@@@@@@@@@@@@@
         NextFrame();
 
         //Change direction (still no collisions checked)
-        if (x < 1024 - width && x > 0)
+        if (r.CanMoveEnemyTo(x + xSpeed, y, x + xSpeed + width, y + height))
             x += xSpeed;
         else
         {

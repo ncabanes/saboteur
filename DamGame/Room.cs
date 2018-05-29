@@ -2,6 +2,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.15, 29-may-2018, Nacho: Added CanMoveEnemyTo(x1, y1, x2, y2)
  * 0.13, 24-may-2018, Nacho: Player can move upstairs and downstairs,
  *      even to different rooms (remaining: collisions on end of stairs) 
  * 0.12, 23-may-2018, Nacho: IsThereVerticalStair implemented (bouncing boxes)
@@ -47,6 +48,7 @@ class Room
     int rightRoom;
     int upRoom;
     int bottomRoom;
+    int screenWidth = 1024;
 
     public Room(bool retroLook)
     {
@@ -212,8 +214,21 @@ class Room
 
     }
 
+    public bool CanMoveEnemyTo(int x1, int y1, int x2, int y2)
+    {
+        if (x1 < 0)
+            return false;
+
+        if (x2 > screenWidth)
+            return false;
+
+        return CanMoveTo(x1, y1, x2, y2);
+    }
+
     public bool CanMoveTo(int x1, int y1, int x2, int y2)
     {
+        
+
         // Let's assume only background (tile "g") cannot be crossed now
         for (int i = 0; i < roomWidth; i++)
         {

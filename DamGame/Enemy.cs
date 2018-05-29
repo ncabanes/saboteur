@@ -4,6 +4,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.15, 29-may-2018, Nacho: Uses Room.CanMoveEnemyTo(x1, y1, x2, y2)
  * 0.03, 10-may-2018, Guillermo Pastor, Brandon Blasco, Javier Cases: Animation
  * 0.02, 09-may-2018, Raul Gogna, Brandon Blasco, Javier Cases: constructor
  * 0.01, 09-may-2018, Nacho: First version, empty skeleton
@@ -33,12 +34,12 @@ class Enemy : Sprite
        
     }
 
-    public override void Move()
+    public void Move(Room r)
     {
         // TO DO: Define real logic
 
         //Change direction
-        if (x < 900 - width && x > 0)
+        if (r.CanMoveEnemyTo(x + xSpeed, y, x + xSpeed + width, y + height))
             x += xSpeed;
         else
         {

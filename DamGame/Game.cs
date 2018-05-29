@@ -127,10 +127,10 @@ class Game
     {
         // TO DO: Animate all elements in a Room
         foreach (Dog d in complex.GetCurrentRoom().GetDogs())
-            d.Move();
+            d.Move(complex.GetCurrentRoom());
 
         foreach (Enemy e in complex.GetCurrentRoom().GetEnemies())
-            e.Move();
+            e.Move(complex.GetCurrentRoom());
 
         info.Animate();
         player.Move(complex.GetCurrentRoom());
