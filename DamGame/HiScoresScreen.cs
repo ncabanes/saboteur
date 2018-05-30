@@ -3,6 +3,8 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.16, 30-may-2018, Nacho: "Saboteur" name included. Background image.
+ *      ESC to return
  * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
  * 0.06, 12-may-2018, Nacho: 
  *      Error checking when writing and reading files
@@ -39,7 +41,14 @@ class HiScoresScreen
 
     public void Run()
     {
+        Font font32 = new Font("data/Joystix.ttf", 32);
         SdlHardware.ClearScreen();
+        SdlHardware.DrawHiddenImage(background, 0, 0);
+
+        SdlHardware.WriteHiddenText("Saboteur",
+            500, 80,
+            0xff, 0x00, 0x00,
+            font32);
 
         SdlHardware.WriteHiddenText("Hi Scores...",
             40, 10,
@@ -56,18 +65,22 @@ class HiScoresScreen
         {
             SdlHardware.WriteHiddenText(hiScores[i].GetName() + " "
                 + hiScores[i].GetPoints(),
-                40, (short)(30 + (i * 20)),
+                500, (short)(150 + (i * 20)),
                 0x22, 0xFF, 0x22,
                 font18);
         }
 
+        SdlHardware.WriteHiddenText("Press ESC to return...",
+            50, 600,
+            0x00, 0xFF, 0x00,
+            font18);
 
         SdlHardware.ShowHiddenScreen();
         do
         {
             SdlHardware.Pause(50);  // To avoid 100% CPU usage
         }
-        while (!SdlHardware.KeyPressed(SdlHardware.KEY_SPC));
+        while (!SdlHardware.KeyPressed(SdlHardware.KEY_ESC));
     }
 
     

@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.16, 30-may-2018, Nacho: ESC to return
  * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
  * 0.06, 12-may-2018, Nacho: yText is reset; some code cleaning,
  *          names are displayed alphabetically: typos fixed
@@ -89,14 +90,14 @@ class CreditsScreen
                 yText += 22;
             }
 
-            SdlHardware.WriteHiddenText("Press Space to return...",
-                10, (short)(yText + 15),
+            SdlHardware.WriteHiddenText("Press ESC to return...",
+                50, (short)(yText + 15),
                 0x00, 0xFF, 0x00,
                 font18);
             SdlHardware.ShowHiddenScreen();
 
             SdlHardware.Pause(20);  // To avoid 100% CPU usage
-            if (SdlHardware.KeyPressed(SdlHardware.KEY_SPC))
+            if (SdlHardware.KeyPressed(SdlHardware.KEY_ESC))
                 finished = true;
             if (startY < -800)
                 finished = true;
