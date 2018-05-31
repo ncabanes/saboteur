@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.18, 31-may-2018, Nacho: Changed player's starting position
  * 0.14, 25-may-2018, Nacho: Only one shuriken can be thrown at a time
  * 0.12, 23-may-2018, Nacho: Moving upstairs (vertical)
  * 0.11, 22-may-2018, Nacho: Player movements checks moved to class Player
@@ -55,7 +56,7 @@ class Game
     {
         font18 = new Font("data/Joystix.ttf", 18);
         player = new Player();
-        player.MoveTo(50, 120);
+        player.MoveTo(50, 60);
 
         Random rnd = new Random();
         /*

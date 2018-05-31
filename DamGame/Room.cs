@@ -2,6 +2,9 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.18, 31-may-2018, Nacho: Can move left, right, up & down in big map
+ *       Row and column switched in GetRoomData
+ *       Bricks are represented with "+" in the map
  * 0.17, 31-may-2018, Nacho: Only one big map, first approach
  * 0.15, 29-may-2018, Nacho: Added CanMoveEnemyTo(x1, y1, x2, y2)
  * 0.13, 24-may-2018, Nacho: Player can move upstairs and downstairs,
@@ -45,11 +48,14 @@ class Room
     int roomWidth;
     int roomHeight;
     int currentRoom;
+    int currentCol;
+    int currentRow;
     int leftRoom;
     int rightRoom;
     int upRoom;
     int bottomRoom;
     int screenWidth = 1024;
+    Complex myComplex;
 
     public Room(Complex c, bool retroLook)
     {
@@ -66,14 +72,41 @@ class Room
         door = new Image("data/" + folder + "/tileWall3.png");
         tileStairLeft = new Image("data/" + folder + "/tileStairLeft.png");
         tileStairRight = new Image("data/" + folder + "/tileStairRight.png");
-        Load(c, 9, 6);  // Starting room
+        currentCol = 6;  // Starting room
+        currentRow = 9;
+        myComplex = c;
+        Load(myComplex, currentCol, currentRow); 
         enemies = new List<Enemy>();
         dogs = new List<Dog>();
     }
 
-    public void Load(Complex c, int row, int col)
+    public void Load(Complex c, int col, int row)
     {
-        background = c.GetRoomData(row, col);
+        background = c.GetRoomData(col, row);
+    }
+
+    public void MoveToRoomRight()
+    {
+        currentCol++;
+        Load(myComplex, currentCol, currentRow);
+    }
+
+    public void MoveToRoomLeft()
+    {
+        currentCol--;
+        Load(myComplex, currentCol, currentRow);
+    }
+
+    public void MoveToRoomUp()
+    {
+        currentRow--;
+        Load(myComplex, currentCol, currentRow);
+    }
+
+    public void MoveToRoomDown()
+    {
+        currentRow++;
+        Load(myComplex, currentCol, currentRow);
     }
 
     /*
@@ -196,7 +229,7 @@ class Room
             {
                 switch (background[i,j])
                 {
-                    case 'b':
+                    case '+':
                         SdlHardware.DrawHiddenImage(brick, i * 32, j * 32);
                         break;
                     case 'g':

@@ -6,6 +6,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.18, 31-may-2018, Nacho: Row and column switched in GetRoomData
  * 0.17, 31-may-2018, Nacho: Only one big map, first approach
  * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
  * 0.01, 09-may-2018, Nacho: First version, almost empty skeleton, only one room
@@ -27,7 +28,7 @@ class Complex
         // currentRoom.Set
     }
 
-    public char[,] GetRoomData(int row, int col)
+    public char[,] GetRoomData(int col, int row)
     {
         char[,] data = new char[tileCols, tileRows];
         int startRow = row * tileRows;

@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.18, 31-may-2018, Nacho: Can move left, right, up & down in big map
  * 0.17, 31-may-2018, Nacho: Room.CheckIfNewRoom disabled
  * 0.14, 25-may-2018, Nacho: Ducking in the right position; 
  *      magic numbers in Player removed
@@ -201,14 +202,12 @@ class Player : Sprite
             }
         }
 
-        /*
         int nextRoom = r.CheckIfNewRoom(this);
         if (nextRoom != -1)
         {
-            r.Load(nextRoom);
+            r.MoveToRoomRight();
             MoveTo(0, y);
         }
-        */
     }
 
     public void TryToMoveLeft(Room r)
@@ -228,14 +227,14 @@ class Player : Sprite
                 MoveLeft();
             }
         }
-        /*
+        
         int nextRoom = r.CheckIfNewRoom(this);
         if (nextRoom != -1)
         {
-            r.Load(nextRoom);
+            r.MoveToRoomLeft();
             MoveTo(1024-width, y);
         }
-        */
+        
     }
 
     public void TryToMoveUp(Room r)
@@ -253,14 +252,12 @@ class Player : Sprite
             Jump();
         }
 
-        /*
         int nextRoom = r.CheckIfNewRoom(this);
         if (nextRoom != -1)
         {
-            r.Load(nextRoom);
+            r.MoveToRoomUp();
             MoveTo(x, 17*32-height);
         }
-        */
     }
 
     public void TryToMoveDown(Room r)
@@ -278,13 +275,11 @@ class Player : Sprite
             Duck();
         }
 
-        /*
         int nextRoom = r.CheckIfNewRoom(this);
         if (nextRoom != -1)
         {
-            r.Load(nextRoom);
+            r.MoveToRoomDown();
             MoveTo(x, 0);
         }
-        */
     }
 }
