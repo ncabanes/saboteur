@@ -2,6 +2,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.17, 31-may-2018, Nacho: Only one big map, first approach
  * 0.15, 29-may-2018, Nacho: Added CanMoveEnemyTo(x1, y1, x2, y2)
  * 0.13, 24-may-2018, Nacho: Player can move upstairs and downstairs,
  *      even to different rooms (remaining: collisions on end of stairs) 
@@ -50,9 +51,9 @@ class Room
     int bottomRoom;
     int screenWidth = 1024;
 
-    public Room(bool retroLook)
+    public Room(Complex c, bool retroLook)
     {
-        roomWidth = 33;
+        roomWidth = 32;
         roomHeight = 17;
         string folder = "imgRetro";
         if (!retroLook)
@@ -65,11 +66,17 @@ class Room
         door = new Image("data/" + folder + "/tileWall3.png");
         tileStairLeft = new Image("data/" + folder + "/tileStairLeft.png");
         tileStairRight = new Image("data/" + folder + "/tileStairRight.png");
-        Load(65);  // Starting room
+        Load(c, 9, 6);  // Starting room
         enemies = new List<Enemy>();
         dogs = new List<Dog>();
     }
 
+    public void Load(Complex c, int row, int col)
+    {
+        background = c.GetRoomData(row, col);
+    }
+
+    /*
     /// <summary>
     /// Loads the data for a room from file 
     /// </summary>
@@ -179,6 +186,7 @@ class Room
                 new string[] { "Error loading room: ", e.Message });
         }
     }
+    */
 
     public void Draw()
     {

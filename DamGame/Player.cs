@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.17, 31-may-2018, Nacho: Room.CheckIfNewRoom disabled
  * 0.14, 25-may-2018, Nacho: Ducking in the right position; 
  *      magic numbers in Player removed
  * 0.13, 24-may-2018, Nacho: Player can move upstairs and downstairs,
@@ -200,12 +201,14 @@ class Player : Sprite
             }
         }
 
+        /*
         int nextRoom = r.CheckIfNewRoom(this);
         if (nextRoom != -1)
         {
             r.Load(nextRoom);
             MoveTo(0, y);
         }
+        */
     }
 
     public void TryToMoveLeft(Room r)
@@ -225,13 +228,14 @@ class Player : Sprite
                 MoveLeft();
             }
         }
-
+        /*
         int nextRoom = r.CheckIfNewRoom(this);
         if (nextRoom != -1)
         {
             r.Load(nextRoom);
             MoveTo(1024-width, y);
         }
+        */
     }
 
     public void TryToMoveUp(Room r)
@@ -249,12 +253,14 @@ class Player : Sprite
             Jump();
         }
 
+        /*
         int nextRoom = r.CheckIfNewRoom(this);
         if (nextRoom != -1)
         {
             r.Load(nextRoom);
             MoveTo(x, 17*32-height);
         }
+        */
     }
 
     public void TryToMoveDown(Room r)
@@ -272,11 +278,13 @@ class Player : Sprite
             Duck();
         }
 
+        /*
         int nextRoom = r.CheckIfNewRoom(this);
         if (nextRoom != -1)
         {
             r.Load(nextRoom);
             MoveTo(x, 0);
         }
+        */
     }
 }
