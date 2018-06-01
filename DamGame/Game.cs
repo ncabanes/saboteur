@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.20, 01-jun-2018, Nacho: Game can be paused (ESC)
  * 0.18, 31-may-2018, Nacho: Changed player's starting position
  * 0.14, 25-may-2018, Nacho: Only one shuriken can be thrown at a time
  * 0.12, 23-may-2018, Nacho: Moving upstairs (vertical)
@@ -39,22 +40,24 @@ class Game
     Complex complex;
     InfoPanel info;
     // Dog dog;
-    Font font18;
+    Font font;
     bool finished;
     // Enemy[] enemies;
     int numEnemies;
     Player player;
     Shuriken weapon;
     bool retroLook;
+    bool paused;
 
     public Game(bool retroLook)
     {
         this.retroLook = retroLook;
+        paused = false;
     }
 
     public void Run()
     {
-        font18 = new Font("data/Joystix.ttf", 18);
+        font = new Font("data/Joystix.ttf", 40);
         player = new Player();
         player.MoveTo(50, 60);
 
@@ -141,34 +144,54 @@ class Game
 
     private void checkInput()
     {
-        if (SdlHardware.KeyPressed(SdlHardware.KEY_RIGHT))
+        if (!paused)
         {
-            player.TryToMoveRight(complex.GetCurrentRoom());
-        }
-
-        if (SdlHardware.KeyPressed(SdlHardware.KEY_LEFT))
-        {
-            player.TryToMoveLeft(complex.GetCurrentRoom());
-        }
-        if (SdlHardware.KeyPressed(SdlHardware.KEY_SPC))
-        {
-            if (!weapon.IsVisible())
+            if (SdlHardware.KeyPressed(SdlHardware.KEY_RIGHT))
             {
-                weapon.Show();
-                weapon.MoveTo(player.GetX() + 40, player.GetY() + 40);
+                player.TryToMoveRight(complex.GetCurrentRoom());
+            }
+
+            if (SdlHardware.KeyPressed(SdlHardware.KEY_LEFT))
+            {
+                player.TryToMoveLeft(complex.GetCurrentRoom());
+            }
+            if (SdlHardware.KeyPressed(SdlHardware.KEY_SPC))
+            {
+                if (!weapon.IsVisible())
+                {
+                    weapon.Show();
+                    weapon.MoveTo(player.GetX() + 40, player.GetY() + 40);
+                }
+            }
+            if (SdlHardware.KeyPressed(SdlHardware.KEY_UP))
+            {
+                player.TryToMoveUp(complex.GetCurrentRoom());
+            }
+
+            if (SdlHardware.KeyPressed(SdlHardware.KEY_DOWN))
+            {
+                player.TryToMoveDown(complex.GetCurrentRoom());
+            }
+
+            if (SdlHardware.KeyPressed(SdlHardware.KEY_ESC))
+            {
+                paused = true;
             }
         }
-        if (SdlHardware.KeyPressed(SdlHardware.KEY_UP))
+
+        if (paused)
         {
-            player.TryToMoveUp(complex.GetCurrentRoom());
+            if (SdlHardware.KeyPressed(SdlHardware.KEY_R))
+            {
+                paused = false;
+            }
+            if (SdlHardware.KeyPressed(SdlHardware.KEY_Q))
+            {
+                paused = false;
+                finished = true;
+            }
         }
 
-        if (SdlHardware.KeyPressed(SdlHardware.KEY_DOWN))
-        {
-            player.TryToMoveDown(complex.GetCurrentRoom());
-        }
-        if (SdlHardware.KeyPressed(SdlHardware.KEY_ESC))
-            finished = true;
         // Cheat 1: C+E to get full energy
         if (SdlHardware.KeyPressed(SdlHardware.KEY_C)
             && SdlHardware.KeyPressed(SdlHardware.KEY_E))
@@ -191,6 +214,15 @@ class Game
             weapon.DrawOnHiddenScreen();
         //for (int i = 0; i < numEnemies; i++)
         //    enemies[i].DrawOnHiddenScreen();
+
+        if (paused)
+        {
+            SdlHardware.WriteHiddenText("Paused. R to Return, Q to Quit.",
+               50, 300,
+               0xFF, 0xCC, 0xFF,
+               font);
+        }
+
         SdlHardware.ShowHiddenScreen();
     }
 }

@@ -2,8 +2,7 @@
 
 ## Next revisions (might change)
 
-0.20 - Pause instead of just quitting the game
-0.21 - Enemies and dogs, read from the (big) map
+0.21 - Enemies and dogs are read from the (big) map
 0.22 - Items in first plane, read from the (big) map
 0.23 - Downstairs only until ground. Jump looking to both sides
 0.24 - Shuriken kills enemies
@@ -14,6 +13,7 @@
 
 ## Previous revisions
 
+0.20 - Pause instead of just quitting the game (when ESC is pressed)
 0.19 - More realistic big map. New tile types.
 0.18 - Moving in all directions in the big map.
 0.17 - Only one huge map, first approach

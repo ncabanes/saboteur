@@ -3,6 +3,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.20, 01-jun-2018, Nacho: Help includes pause key (ESC)
  * 0.16, 30-may-2018, Nacho: "Saboteur" name included. 
  *      More compact help text. ESC to return
  * 0.07, 14-may-2018, Nacho: Retro/updated look changeable
@@ -54,6 +55,7 @@ class HelpScreen
         "RIGHT    Joystick RIGHT  MOVE RIGHT,",
         "LEFT     Joystick LEFT   MOVE LEFT",
         "SPACE    Joystick FIRE   THROW/USE/TAKE object, or PUNCH if none",
+        "ESC      (None)          Pause / Quit game",
         " ",
         "Press ESC to return..."};
         
