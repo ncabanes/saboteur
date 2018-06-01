@@ -2,6 +2,8 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.22, 01-jun-2018, Nacho: Items in first plane are read from the (big) map
+ *      and drawn using "DrawItems"
  * 0.21, 01-jun-2018, Nacho: Enemies and dogs are read from the (big) map
  * 0.19, 01-jun-2018, Nacho: A few more tiles are displayed
  * 0.18, 31-may-2018, Nacho: Can move left, right, up & down in big map
@@ -47,6 +49,7 @@ class Room
     Image tileStairRight;
     List<Enemy> enemies;
     List<Dog> dogs;
+    List<Sprite> items;
     int roomWidth;
     int roomHeight;
     int currentRoom;
@@ -86,6 +89,7 @@ class Room
         background = c.GetRoomData(col, row);
         enemies = new List<Enemy>();
         dogs = new List<Dog>();
+        items = new List<Sprite>();
         GenerateEnemiesAndItems();
     }
 
@@ -137,6 +141,28 @@ class Room
                     int y = j * 32;
                     enemies.Add(e);
                     e.MoveTo(x, y);
+                }
+
+                if (background[i, j] == 'P')
+                {
+                    background[i, j] = background[i + 1, j];
+                    Sprite s = new Sprite();
+                    s.LoadImage("data\\imgRetro\\objPlates5.png");
+                    int x = i * 32;
+                    int y = j * 32;
+                    items.Add(s);
+                    s.MoveTo(x, y);
+                }
+
+                if (background[i, j] == 'p')
+                {
+                    background[i, j] = background[i + 1, j];
+                    Sprite s = new Sprite();
+                    s.LoadImage("data\\imgRetro\\objPlates3.png");
+                    int x = i * 32;
+                    int y = j * 32;
+                    items.Add(s);
+                    s.MoveTo(x, y);
                 }
             }
         }
@@ -291,7 +317,14 @@ class Room
                 }
             }
         }
+    }
 
+    public void DrawItems()
+    {
+        foreach (Sprite s in items)
+        {
+            s.DrawOnHiddenScreen();
+        }
     }
 
     public bool CanMoveEnemyTo(int x1, int y1, int x2, int y2)

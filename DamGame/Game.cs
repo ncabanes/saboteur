@@ -3,6 +3,8 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.22, 01-jun-2018, Nacho: Call to Room.DrawItems for the Items in first plane
+ *      Key F2 to switch FullScreen / Windowed
  * 0.20, 01-jun-2018, Nacho: Game can be paused (ESC)
  * 0.18, 31-may-2018, Nacho: Changed player's starting position
  * 0.14, 25-may-2018, Nacho: Only one shuriken can be thrown at a time
@@ -216,6 +218,9 @@ class Game
         player.DrawOnHiddenScreen();
         if(weapon.IsVisible())
             weapon.DrawOnHiddenScreen();
+
+        complex.GetCurrentRoom().DrawItems();
+
         //for (int i = 0; i < numEnemies; i++)
         //    enemies[i].DrawOnHiddenScreen();
 
