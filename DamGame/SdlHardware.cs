@@ -4,6 +4,7 @@
  * Nacho Cabanes, 2013
  * 
  * Changes:
+ * 01-jun-2018: FullScreen can be toggled
  * 0.01, 24-jul-2013: Initial version, based on SdlMuncher 0.14
  */
 
@@ -19,6 +20,9 @@ class SdlHardware
 
     static short startX, startY; // For Scroll
 
+    static int flags;
+    static int colors;
+
     static bool isThereJoystick;
     static IntPtr joystick;
 
@@ -26,12 +30,13 @@ class SdlHardware
     static int lastMouseClick;
 
 
-    public static void Init(short w, short h, int colors, bool fullScreen)
+    public static void Init(short w, short h, int colorDepth, bool fullScreen)
     {
         width = w;
         height = h;
+        colors = colorDepth;
 
-        int flags = Sdl.SDL_HWSURFACE | Sdl.SDL_DOUBLEBUF | Sdl.SDL_ANYFORMAT;
+        flags = Sdl.SDL_HWSURFACE | Sdl.SDL_DOUBLEBUF | Sdl.SDL_ANYFORMAT;
         if (fullScreen)
             flags |= Sdl.SDL_FULLSCREEN;
         Sdl.SDL_Init(Sdl.SDL_INIT_EVERYTHING);
@@ -107,6 +112,19 @@ class SdlHardware
     public static int GetHeight()
     {
         return height;
+    }
+
+    public static void ToggleFullScreen()
+    {
+        //Sdl.SDL_WM_ToggleFullScreen(hiddenScreen);
+
+        // Alternative way, supposed to be more reliable
+        // http://sdl.beuc.net/sdl.wiki/SDL_WM_ToggleFullScreen
+
+        flags = flags ^ Sdl.SDL_FULLSCREEN;
+
+        hiddenScreen = Sdl.SDL_SetVideoMode(
+            width, height, colors, flags);
     }
 
     public static void FatalError(string text)
@@ -380,4 +398,6 @@ class SdlHardware
     public static int KEY_RIGHT = Sdl.SDLK_RIGHT;
     public static int KEY_LEFT = Sdl.SDLK_LEFT;
     public static int KEY_RETURN = Sdl.SDLK_RETURN;
+
+    public static int KEY_F2 = Sdl.SDLK_F2;
 }

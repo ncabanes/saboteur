@@ -192,6 +192,10 @@ class Game
             }
         }
 
+        // And F2 toggles Full Screen mode
+        if (SdlHardware.KeyPressed(SdlHardware.KEY_F2))
+            SdlHardware.ToggleFullScreen();
+
         // Cheat 1: C+E to get full energy
         if (SdlHardware.KeyPressed(SdlHardware.KEY_C)
             && SdlHardware.KeyPressed(SdlHardware.KEY_E))
