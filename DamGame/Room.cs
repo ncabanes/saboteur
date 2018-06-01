@@ -2,6 +2,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.19, 01-jun-2018, Nacho: A few more tiles are displayed
  * 0.18, 31-may-2018, Nacho: Can move left, right, up & down in big map
  *       Row and column switched in GetRoomData
  *       Bricks are represented with "+" in the map
@@ -37,7 +38,7 @@ class Room
 {
     Image tmpBackground;
     char[,] background;
-    Image brick;
+    Image brick, brickD, brickL;
     Image ground;
     Image window;
     Image door;
@@ -68,7 +69,8 @@ class Room
         background = new char[roomWidth, roomHeight];
         brick = new Image("data/" + folder + "/tileWall1.png");
         ground = new Image("data/" + folder + "/tileFloor.png");
-        window = new Image("data/" + folder + "/tileWall2.png");
+        brickD = new Image("data/" + folder + "/tileWall2.png");
+        brickL = new Image("data/" + folder + "/tileWall4.png");
         door = new Image("data/" + folder + "/tileWall3.png");
         tileStairLeft = new Image("data/" + folder + "/tileStairLeft.png");
         tileStairRight = new Image("data/" + folder + "/tileStairRight.png");
@@ -231,6 +233,12 @@ class Room
                 {
                     case '+':
                         SdlHardware.DrawHiddenImage(brick, i * 32, j * 32);
+                        break;
+                    case 'D':
+                        SdlHardware.DrawHiddenImage(brickD, i * 32, j * 32);
+                        break;
+                    case 'L':
+                        SdlHardware.DrawHiddenImage(brickL, i * 32, j * 32);
                         break;
                     case 'g':
                         SdlHardware.DrawHiddenImage(ground, i * 32, j * 32);

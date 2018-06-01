@@ -2,14 +2,20 @@
 
 ## Next revisions (might change)
 
-0.18 - All rooms in memory, to preserve state of the rooms.
-0.19 - Downstairs only until ground. Jump looking to both sides.
-0.20 - Pause instead of just quitting the game.
-0.21 - Game state: save and load.
+0.20 - Pause instead of just quitting the game
+0.21 - Enemies and dogs, read from the (big) map
+0.22 - Items in first plane, read from the (big) map
+0.23 - Downstairs only until ground. Jump looking to both sides
+0.24 - Shuriken kills enemies
+0.25 - Preserving the state of the rooms
+0.26 - Game state: save and load
+0.27 - Enemies can fire
 ...
 
 ## Previous revisions
 
+0.19 - More realistic big map. New tile types.
+0.18 - Moving in all directions in the big map.
 0.17 - Only one huge map, first approach
 0.16 - Minor improvements in HelpScreen, CreditsScreen, HiScoresScreen
 0.15 - Enemy and dog with proper movement in the room limits.
