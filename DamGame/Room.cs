@@ -2,6 +2,7 @@
 /* Part of Saboteur Remake
  * 
  * Changes:
+ * 0.21, 01-jun-2018, Nacho: Enemies and dogs are read from the (big) map
  * 0.19, 01-jun-2018, Nacho: A few more tiles are displayed
  * 0.18, 31-may-2018, Nacho: Can move left, right, up & down in big map
  *       Row and column switched in GetRoomData
@@ -76,15 +77,16 @@ class Room
         tileStairRight = new Image("data/" + folder + "/tileStairRight.png");
         currentCol = 6;  // Starting room
         currentRow = 9;
-        myComplex = c;
+        myComplex = c;        
         Load(myComplex, currentCol, currentRow); 
-        enemies = new List<Enemy>();
-        dogs = new List<Dog>();
     }
 
     public void Load(Complex c, int col, int row)
     {
         background = c.GetRoomData(col, row);
+        enemies = new List<Enemy>();
+        dogs = new List<Dog>();
+        GenerateEnemiesAndItems();
     }
 
     public void MoveToRoomRight()
@@ -109,6 +111,35 @@ class Room
     {
         currentRow++;
         Load(myComplex, currentCol, currentRow);
+    }
+
+    public void GenerateEnemiesAndItems()
+    {
+        for (int i = 0; i < roomWidth; i++)
+        {
+            for (int j = 0; j < roomHeight; j++)
+            {
+                if (background[i, j] == '1')
+                {
+                    background[i, j] = background[i+1, j];
+                    Dog d = new Dog();
+                    int x = i * 32;
+                    int y = j * 32;
+                    dogs.Add(d);
+                    d.MoveTo(x, y);
+                }
+
+                if (background[i, j] == '2')
+                {
+                    background[i, j] = background[i + 1, j];
+                    Enemy e = new Enemy();
+                    int x = i * 32;
+                    int y = j * 32;
+                    enemies.Add(e);
+                    e.MoveTo(x, y);
+                }
+            }
+        }
     }
 
     /*
